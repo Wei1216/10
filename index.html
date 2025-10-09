@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>跑馬燈抽題＋選號器（獨立運作）</title>
+<style>
+  body {
+    margin: 0;
+    font-family: "Microsoft JhengHei", sans-serif;
+    display: flex;
+    height: 100vh;
+    background: #f8f8f8;
+  }
+
+  /* === 左側：選號器 === */
+  .lottery-container {
+    flex: 0 0 200px;
+    background: rgba(255, 255, 255, 0.85);
+    border-right: 3px solid #98d0de;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+    text-align: center;
+    padding: 20px;
+  }
+
+  .title { font-size: 20px; font-weight: bold; color: #333; margin-bottom: 10px; }
+  .number-display {
+    width: 70px; height: 50px;
+    border: 3px solid #98d0de;
+    border-radius: 8px;
+    display: flex; justify-content: center; align-items: center;
+    background: linear-gradient(45deg, #f8f9ff, #e8ecff);
+  }
+  .number { font-size: 26px; font-weight: bold; color: #98d0de; }
+  .progress-bar {
+    width: 120px; height: 6px;
+    background: #eee; border-radius: 3px;
+    margin: 10px auto; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(45deg, #98d0de, #7bc4d4);
+    width: 0%;
+    transition: width 0.1s linear;
+  }
+  .status-text { font-size: 13px; color: #666; margin-top: 5px; }
+  .lottery-btn {
+    margin-top: 15px;
+    padding: 6px 16px;
+    background: linear-gradient(45deg, #98d0de, #7bc4d4);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  .spinning { animation: spin 0.1s linear infinite; }
+  @keyframes spin {
+    0% { transform: translateY(-20px); opacity: 0.5; }
+    50% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(20px); opacity: 0.5; }
+  }
+
+  /* === 右側：跑馬燈／圖片顯示區 === */
+  #main-area {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+  }
+  #marquee {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    padding: 20px;
+  }
+  #main-image {
+    max-width: 90%;
+    max-height: 85%;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    display: none;
+  }
+  #start-btn {
+    margin-top: 30px;
+    padding: 10px 25px;
+    font-size: 1.2rem;
+    background: linear-gradient(45deg, #98d0de, #7bc4d4);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<!-- 左側：選號器 -->
+<div class="lottery-container">
+  <div class="title">選號器</div>
+  <div class="number-display"><div class="number" id="numberDisplay">?</div></div>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="status-text" id="statusText">等待啟動</div>
+  <button class="lottery-btn" id="lotteryBtn">抽號碼</button>
+</div>
+
+<!-- 右側：題目區 -->
+<div id="main-area">
+  <div id="marquee">點擊「開始抽題」</div>
+  <img id="main-image" src="">
+  <button id="start-btn">開始抽題</button>
+</div>
+
+<script>
+/* ====== 選號器控制（獨立運作） ====== */
+let isRunning = false;
+let animationInterval, progressInterval;
+
+function getRandomNumber() {
+  return Math.floor(Math.random() * 25) + 2; // 2~26
+}
+
+function startLottery() {
+  if (isRunning) return;
+  isRunning = true;
+
+  const numberDisplay = document.getElementById('numberDisplay');
+  const statusText = document.getElementById('statusText');
+  const progressFill = document.getElementById('progressFill');
+
+  numberDisplay.className = 'number spinning';
+  statusText.textContent = '抽籤中...';
+  progressFill.style.width = '0%';
+
+  let progress = 0;
+  const totalTime = 3000;
+  const updateInterval = 50;
+
+  animationInterval = setInterval(() => {
+    numberDisplay.textContent = getRandomNumber();
+  }, 100);
+
+  progressInterval = setInterval(() => {
+    progress += updateInterval;
+    progressFill.style.width = (progress / totalTime) * 100 + '%';
+    if (progress >= totalTime) clearInterval(progressInterval);
+  }, updateInterval);
+
+  setTimeout(() => {
+    clearInterval(animationInterval);
+    const finalNumber = getRandomNumber();
+    numberDisplay.textContent = finalNumber;
+    numberDisplay.className = 'number final-result';
+    statusText.textContent = `🎉 抽中號碼：${finalNumber}`;
+    progressFill.style.width = '100%';
+    isRunning = false;
+  }, totalTime);
+}
+
+document.getElementById("lotteryBtn").onclick = startLottery;
+
+/* ====== 抽題邏輯 ====== */
+const questionPool = [
+  { type: "A", text: "題目1：有平面嗎", images: ["https://media.discordapp.net/attachments/1373159840708558860/1425688307655905300/15.png?ex=68e87f34&is=68e72db4&hm=e7a87598f96ddf5dc606261872f5bfbffcac88f36b5286c3833635239f3927e7&=&format=webp&quality=lossless&width=1128&height=635"] },
+  { type: "A", text: "題目2：有平面嗎？", images: ["https://media.discordapp.net/attachments/1373159840708558860/1425721670542426123/19.png?ex=68e89e46&is=68e74cc6&hm=efa4c34ce99a2b1b84fbd3f56b7004f9aae68f9db7ed2abd852748eaae0d080d&=&format=webp&quality=lossless&width=972&height=548"] },
+  { type: "A", text: "題目3：有平面嗎？", images: ["https://media.discordapp.net/attachments/1373159840708558860/1425721672404701295/23.png?ex=68e89e47&is=68e74cc7&hm=798c2a5a4996333858ce73c6faa08ef41f33fa933917ec7c193c79fa424563b7&=&format=webp&quality=lossless&width=972&height=548"] },
+
+  { type: "B", text: "題目4：哪個面比較大？", images: ["https://media.discordapp.net/attachments/1373159840708558860/1425688401939791873/16.png?ex=68e87f4b&is=68e72dcb&hm=bc1dd155f19907d4d54a29d10e729e03fc05dd294d181e3ec809bd900fc2254a&=&format=webp&quality=lossless&width=972&height=548"] },
+  { type: "B", text: "題目5：哪個面比較大？", images: ["https://media.discordapp.net/attachments/1373159840708558860/1425721670915723294/20.png?ex=68e89e46&is=68e74cc6&hm=bba02d4e54286281af2eaae50672b7856f23e62d7c9a22dbb6dd3a74bcc51bdf&=&format=webp&quality=lossless&width=972&height=548"] },
+  { type: "B", text: "題目6：哪個面比較大？", images: ["https://media.discordapp.net/attachments/1373159840708558860/1425721672958218290/24.png?ex=68e89e47&is=68e74cc7&hm=014a3d68b482d65ef0c4a223cb2b50a15b458ef4ea4817d365fa6752a0565fed&=&format=webp&quality=lossless&width=972&height=548"] },
+
+  { type: "C", text: "題目7：怎麼比較？", images: [
+    "https://media.discordapp.net/attachments/1373159840708558860/1425688402359226508/17.png?ex=68e87f4b&is=68e72dcb&hm=f4e870b457321b0bad14d17d4662776ebe2fe9aff358f26cf507bd83721ab8d8&=&format=webp&quality=lossless&width=972&height=548",
+    "https://media.discordapp.net/attachments/1373159840708558860/1425688402837372929/18.png?ex=68e87f4b&is=68e72dcb&hm=ca169a45674a8b5ecea885fe2412a737883913524f65ec7da3a9e48d42e1f213&=&format=webp&quality=lossless&width=972&height=548"
+  ]},
+
+  { type: "C", text: "題目8：怎麼比較？", images: [
+    "https://media.discordapp.net/attachments/1373159840708558860/1425721671570165862/21.png?ex=68e89e47&is=68e74cc7&hm=185894be193021d50199a82e0783ce49e2e68ee653711e9f7fbb39da8dc26edc&=&format=webp&quality=lossless&width=972&height=548",
+    "https://media.discordapp.net/attachments/1373159840708558860/1425721672031535104/22.png?ex=68e89e47&is=68e74cc7&hm=d4a8879c173fab5086cbea1883d0950c33dde755737b6f3742c1b7668dc830ef&=&format=webp&quality=lossless&width=972&height=548"
+  ]},
+
+  { type: "C", text: "題目9：怎麼比較？", images: [
+    "https://media.discordapp.net/attachments/1373159840708558860/1425721673415655525/25.png?ex=68e89e47&is=68e74cc7&hm=be1d96337e4672877619060b3bec79d29b825017e465d83707c7c30d989445c5&=&format=webp&quality=lossless&width=972&height=548",
+    "https://media.discordapp.net/attachments/1373159840708558860/1425721673801535499/26.png?ex=68e89e47&is=68e74cc7&hm=c5e2e5dd3ea9c65422151fbecbe921e706c1fc7c9cc2fa306e1aa91f9f703369&=&format=webp&quality=lossless&width=972&height=548"
+  ]}
+];
+
+let remaining = [...questionPool];
+let drawCount = 0;
+let currentQ = null;
+let currentImgIndex = 0;
+
+const marquee = document.getElementById("marquee");
+const img = document.getElementById("main-image");
+const startBtn = document.getElementById("start-btn");
+
+startBtn.onclick = startMarquee;
+img.onclick = handleImageClick;
+
+// === 抽題函式 ===
+function startMarquee() {
+  if (remaining.length === 0) {
+    marquee.textContent = "所有題目都抽完啦！";
+    return;
+  }
+  startBtn.style.display = "none";
+  img.style.display = "none";
+
+  let interval = setInterval(() => {
+    const q = remaining[Math.floor(Math.random() * remaining.length)];
+    marquee.textContent = q.text;
+  }, 100);
+
+  setTimeout(() => {
+    clearInterval(interval);
+    const chosen = getNextQuestion(); // 改：控制前三題的抽出順序
+    currentQ = chosen;
+    setTimeout(() => showImage(chosen), 1000);
+  }, 3000);
+}
+
+// === 控制前三題必出特定類型 ===
+function getNextQuestion() {
+  drawCount++;
+
+  let filtered;
+  if (drawCount === 1) {
+    filtered = remaining.filter(q => q.type === "A");
+  } else if (drawCount === 2) {
+    filtered = remaining.filter(q => q.type === "B");
+  } else if (drawCount === 3) {
+    filtered = remaining.filter(q => q.type === "C");
+  } else {
+    filtered = remaining;
+  }
+
+  const chosen = filtered[Math.floor(Math.random() * filtered.length)];
+  return chosen;
+}
+
+// === 顯示題目圖片 ===
+function showImage(q) {
+  marquee.textContent = q.text;
+  img.src = q.images[0];
+  img.style.display = "block";
+  currentImgIndex = 0;
+}
+
+// === 點擊圖片進行切換或重置 ===
+function handleImageClick() {
+  if (!currentQ) return;
+  currentImgIndex++;
+  if (currentImgIndex < currentQ.images.length) {
+    img.src = currentQ.images[currentImgIndex];
+  } else {
+    resetAfterQuestion();
+  }
+}
+
+// === 題目完成後重置 ===
+function resetAfterQuestion() {
+  remaining = remaining.filter(q => q !== currentQ);
+  currentQ = null;
+  img.style.display = "none";
+  marquee.textContent = "點擊「開始抽題」";
+  startBtn.style.display = "block";
+}
+</script>
+
+
+</body>
+</html>
