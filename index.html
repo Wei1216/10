@@ -168,27 +168,27 @@ document.getElementById("lotteryBtn").onclick = startLottery;
 
 /* ====== 抽題邏輯 ====== */
 const questionPool = [
-  { type: "A", text: "題目1：有平面嗎", images: ["https://media.discordapp.net/attachments/1373159840708558860/1425688307655905300/15.png?ex=68e87f34&is=68e72db4&hm=e7a87598f96ddf5dc606261872f5bfbffcac88f36b5286c3833635239f3927e7&=&format=webp&quality=lossless&width=1128&height=635"] },
-  { type: "A", text: "題目2：有平面嗎？", images: ["https://media.discordapp.net/attachments/1373159840708558860/1425721670542426123/19.png?ex=68e89e46&is=68e74cc6&hm=efa4c34ce99a2b1b84fbd3f56b7004f9aae68f9db7ed2abd852748eaae0d080d&=&format=webp&quality=lossless&width=972&height=548"] },
-  { type: "A", text: "題目3：有平面嗎？", images: ["https://media.discordapp.net/attachments/1373159840708558860/1425721672404701295/23.png?ex=68e89e47&is=68e74cc7&hm=798c2a5a4996333858ce73c6faa08ef41f33fa933917ec7c193c79fa424563b7&=&format=webp&quality=lossless&width=972&height=548"] },
+  { type: "A", text: "題目1：有平面嗎", images: ["https://lh3.googleusercontent.com/sitesv/AICyYdYjEXnyhcVEQkat3jwBW-2icDxy_fohFaZdtbCORwg4LICsp8-ES4uAh6w4GbTsE0pzkXXD_EChGcnfCtcFSS_3W1PUH4vSsvcoVyWnLjLuyAEiaSpqVAucnqQfSEpCAbTa8ypASgSmPUL3Ob5A2LafH1KHE5t1U7zSyNu5BIcdvW1d3BQTBcGORnlsUssodLjNKJ9Oa_n_Yef-Z2I-s_w_ddWxeXXDyL7vSmU=w1280"] },
+  { type: "A", text: "題目2：有平面嗎？", images: ["https://lh3.googleusercontent.com/sitesv/AICyYdY9eXHtfGCtxhVDEER378hkASZ655xeUto6RwXjEX6_jWntOPgVoMuxsZJofByWhPUQHrenuGu-k-9o32NgJtswzAXj15O9GssMM_XqT1CWWSETh6BO4cChhwCrqlCLlhXoHcAUAKV013vERwDrSE4AHdQKQHlRQ7sd3m0wQvqbjDwhxLzERBjnQBeErChGpxY3OR78HZkjvIqT4fLKZNb_c6rmGHQiJIGk=w1280"] },
+  { type: "A", text: "題目3：有平面嗎？", images: ["https://lh3.googleusercontent.com/sitesv/AICyYdb535IwnRGSZni8azBcPNBfmuaUDhFBxt1TQopjjqs_F0CvO75tGUfDQtN1UMtNQu3eROCFQ4l6MCHbf8oiTe4IJH7O0gdxnut_g5ZZl2L-tW24haOeu6RXPFKub1Ua375g17iVw-NFJDyET-b-BLTM9zEBnCQWw4aQOboPCcsERTIoE8k2Mh030hi4eECJbg4JF7nBPMjx5nvBwtNfLBdQtr591kXwdkkTPhU=w1280"] },
 
-  { type: "B", text: "題目4：哪個面比較大？", images: ["https://cdn.discordapp.com/attachments/1373159840708558860/1425688401939791873/16.png?ex=68e9d0cb&is=68e87f4b&hm=491383cfe458668858009ef9912a7c76544265abd6ecf28a4d5eb2236dfca376&"] },
-  { type: "B", text: "題目5：哪個面比較大？", images: ["https://media.discordapp.net/attachments/1373159840708558860/1425721670915723294/20.png?ex=68e89e46&is=68e74cc6&hm=bba02d4e54286281af2eaae50672b7856f23e62d7c9a22dbb6dd3a74bcc51bdf&=&format=webp&quality=lossless&width=972&height=548"] },
-  { type: "B", text: "題目6：哪個面比較大？", images: ["https://media.discordapp.net/attachments/1373159840708558860/1425721672958218290/24.png?ex=68e89e47&is=68e74cc7&hm=014a3d68b482d65ef0c4a223cb2b50a15b458ef4ea4817d365fa6752a0565fed&=&format=webp&quality=lossless&width=972&height=548"] },
+  { type: "B", text: "題目4：哪個面比較大？", images: ["https://lh3.googleusercontent.com/sitesv/AICyYdY4YPFUy-sUATsUKYb0i1LZU1Di4L292_24n3DYch_RzVmpwMznPR649yrw40nBPSdTfrAgHoSj1Aqzky58jom7jdel-KL4jJgIIMjwnOHHF1cAdXeMhI0SY2yRCK4FAVdxiknxo0ePBTHTo2-gM2sbwDQf10WIFwtXX8eaW1sjl6tY6GcsEKrbeHXyWCKJSxwhD0UWJrdrSTnJtGpe2K-SzQsPX7O1aFuZb1k=w1280"] },
+  { type: "B", text: "題目5：哪個面比較大？", images: ["https://lh3.googleusercontent.com/sitesv/AICyYdYKSouri6hJwWfGS_f-4XAtMrR5Pp8KAlCm9winr96G_dzCBNE66a2-MImgkbB0VqtM2cpfrYQBlbDrFM0OFMGehrzgzuhKgh8Xh2PDnh0jFlM2ykGtfhgAnrqEmq3ASaPFh_sWWyhlpErGxjrO28sr9tyDdhqoceFQKmG11U-azEEsCpxlP4Q8421-IWxzuN8nvfih-J90ol-1o4RPP3lR8e1Tt-isYzx8l5w=w1280"] },
+  { type: "B", text: "題目6：哪個面比較大？", images: ["https://lh3.googleusercontent.com/sitesv/AICyYdb3OBuTY5jdvoz2zu32xKb-qG5kK3AePqANvkeUFncYVkMAYfJeTD6d5tDI4aXNF2I2Osx_9sNB-sNXFJIgvqMsKROdq2lz0pX4PvSd1pw7KWNaWmboOMFvpZ7iZR6eXBfSClolH0ujXptK0G4XPIiSsgnUWTLwXoDWxMw-iKulERQUf5siBG2JkwNYZr89HbtBKJy4HUGYFcvFKYZSJyBuh8D3k1ZYSnlkpac=w1280"] },
 
   { type: "C", text: "題目7：怎麼比較？", images: [
-    "https://media.discordapp.net/attachments/1373159840708558860/1425688402359226508/17.png?ex=68e9d0cb&is=68e87f4b&hm=7db06fe96f17bb4cfabe4987cd5784546172fa3e03eee3b8af0bb3d1825c48f0&=&format=webp&quality=lossless&width=1185&height=666",
-    "https://media.discordapp.net/attachments/1373159840708558860/1425688402837372929/18.png?ex=68e9d0cb&is=68e87f4b&hm=81fc316246760426c974d25456c112322daa5b5592bb55d5e70237374b638f89&=&format=webp&quality=lossless&width=1185&height=666"
+    "https://lh3.googleusercontent.com/sitesv/AICyYdZVwNpvUrZML4W12wZSzjnfRwPd0gY5dVbP1TihbGzuF0tS8xqTwzR2xBDVYuGx_YaBjvXo6OxQMWT9z8TALwzDMTiLWZuo1kH54NwtCAWS9zIKCUAYlnkciti2s0h50omdXZ4Jzvacpu1AfyqvTA0jEvAUshTJjkzM-CS02aW4JzQjA2bhuhkQCsCOZRFLtuBBbowSnY2IkX69G-VqcDf58IYjxXzTQc4a5dQ=w1280",
+    "https://lh3.googleusercontent.com/sitesv/AICyYdbUizUyLH1n4l4GrJ5WhVe_o_ilcWlCC4KNAlH0tBVcXbkGNHLFzCxj5UIECUIr7q9fpcmKAwCSXUwXQQC1FD2V0B3_pTpPGGEJdnhGoqtb-LuRzzd1c0OKmjfJV0YMxZwc4aIS0MJc_Rx24Kvq_y0VWDUS07FnsAAYbOtdZdasMyehPt_7Wb8lTgkqh-TEqSYkXvtzH8b-IVwNV8TtAcKTqf-qNEV6Q8yV6u8=w1280"
   ]},
 
   { type: "C", text: "題目8：怎麼比較？", images: [
-    "https://media.discordapp.net/attachments/1373159840708558860/1425721671570165862/21.png?ex=68e94707&is=68e7f587&hm=0981000f16337a6d8ab7d1db639cdd54757c54b9d962b09aef4c827e9852c9f5&=&format=webp&quality=lossless&width=1185&height=666",
-    "https://media.discordapp.net/attachments/1373159840708558860/1425721672031535104/22.png?ex=68e94707&is=68e7f587&hm=5735266907c84c856e0bc8a933ff75c0aaf7adf4d3fb707640af027db0c647c8&=&format=webp&quality=lossless&width=1185&height=666"
+    "https://lh3.googleusercontent.com/sitesv/AICyYdaz2lZYjNZ8yd4P18wBciu8OaYCWfkIHPwPWgwnePajuXdBg-D8M88o8oKP0uepp6PuVEgXONvJNkXEOnAqx8ro4cASAv4RrSdSoxSErA381A6aOmf0K_dqFAkEcxtzYZwq7fyhywp8GGXLeRRSybX59uupvrdTJ0a1r-KAkxrSQ4nlsTzcKR9AKXv9hmq6HX_T6FSzlNf3Z-BiDWbW9uZPM2yAkxx9gdkM=w1280",
+    "https://lh3.googleusercontent.com/sitesv/AICyYda-o_uPxajuXTKfhsgYpnD96wSYndiIHFNos3W8NzrKLS5i6jRNaHy6pjjR9tdhQJiAnIQVTBJco0mINPpRPh1FUsrcwoFSgXf1cL6zQm4_wLcTOFEqDAHB37Vcr0FR6pye1FUS8nAy6aSczlznoad6qxxQncKI9yCyO6hTa9a9ZlqQN0we04g-1SozKCrjMWh75GnNqMrWqNjizN5_o7V-Pzdy0YyruZt1=w1280"
   ]},
 
   { type: "C", text: "題目9：怎麼比較？", images: [
-    "https://media.discordapp.net/attachments/1373159840708558860/1425721673415655525/25.png?ex=68e94707&is=68e7f587&hm=94c77c8ed9f43835fdd9484717e4dbbda51a3622e4b7bc0c648efc3d34d5c678&=&format=webp&quality=lossless&width=1185&height=666",
-    "https://media.discordapp.net/attachments/1373159840708558860/1425721673801535499/26.png?ex=68e94707&is=68e7f587&hm=e6de298b36c1b8391df1e8a3653eeed75d65f169c0178e7239fe995904713da1&=&format=webp&quality=lossless&width=1185&height=666"
+    "https://lh3.googleusercontent.com/sitesv/AICyYdbrsE3Kvy44DGDZnjrWxy8AMzf_6_Etr2v9MLdp7uB1xEYkSu9rbvOtPb5o_Y4KYH1twC18aRRRkr-qqlZiypppL9X4IfsYthY2_6UbVG0obIzxmq44kTJxZu0rcDtsmvNHGUimRdTAcXdiiWnThGhJGqHiNJ8Hb409t8APuDXJtPx6Qygp_UaKStHN_Wdos8zEAKwY5FhxUh-t_z3-iWozKoRltAkHjDn1S5s=w1280",
+    "https://lh3.googleusercontent.com/sitesv/AICyYda0SSgJSUnDX0R2UZM7mvyfwNdEJg1yfvJT3N2BCyDx3H-3I9Cog2uPgbcQ_T2OtBu7dGteS8lX0AeZurCJKRqgdbFgcY7nycI6XwKSp5Xd0koioHc-sSlTU4W0A0Dcw_YlbnT5g2J-emv2_TVJaECLEky6nw6KvHfSaducJbI8OnmMnnH4n9Fq_Ch_kRkl5DGV6zEKIqQ4kxEc8nwCKnCRTaUWrDMjVJVu_TE=w1280"
   ]}
 ];
 
