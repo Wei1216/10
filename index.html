@@ -180,27 +180,27 @@ document.getElementById("lotteryBtn").onclick = startLottery;
 
 /* ====== 抽題邏輯 ====== */
 const questionPool = [
-  { type: "A", text: "題目：有平面嗎", images: ["https://lh3.googleusercontent.com/sitesv/AICyYdbarS5pY_NVH8QpOD10DWz-WbDTi50AE8P2wUbffJxaqKz53jlq2_0-9w9r-ZrxWYWzQirHp8P6HJsn31pIn9amoMRRIFL5knSrJlKBQJ0NGC4CK1ekvH1MUVhaEQhi6fkEbLEZlS_V9hmlgKz7ck-G9VBoQSTSuAuNwginpwezi2jDl9C7QrCnHayLMkv1ifdEF4K5M6CyLgh37mfPfpYAPArct7LP5qkC=w1280"] },
-  { type: "A", text: "題目：有平面嗎？", images: ["https://lh3.googleusercontent.com/sitesv/AICyYdaG8_9CznTTVvbvrlpwB8rpwQiY6FXGutOT3ZurqLthcbAGLDvSQpkPRVbszY0eYn-SPjJEd7hp3RhVgC8HEGb7hWuAaXkPzGjN8M2IBnOQgGif0iPOIQPkeXCZV8w2pC4xGpCnTj57x_OSa_JFOMHytWHgko7Y0oXejcFEx7C-1diRoYBj2FENXO0AQByqXKfivnA7ERTmwDNl7EXRY10Cgh-E66Bq3PPfEWI=w1280"] },
-  { type: "A", text: "題目：有平面嗎？", images: ["https://lh3.googleusercontent.com/sitesv/AICyYdaES5TFi3dcJAfIvhEE_aCJ3cQKny3xaj2zq5mHhY9KVJnj3m6HPkHyOJR82HWc9IFs8WvBntw7yFlE-5lOSTCiewAMKbWWw6QLNHBqTtP9hSOiuaSJhYwfONgJdvRDFLxBDmezytPd6lz_NUpM9XdXRexudPDOMyZfKqx7kvnVVLC6n7KvR3K1lo5TinspI1jq_L7NBQ59XaAFLPdJ1apiL0I89ot8qgP6=w1280"] },
+  { type: "A", text: "題目：有平面嗎", images: ["https://lh3.googleusercontent.com/sitesv/AICyYdZ8lDTWvQygvdOL6Tdb4TebBPe8o-n0uPMHVKCwYydhEjG5EsfR4AgY1u6as1-i3z97DmR9jzjVoohiwx7zpoLrGeD0RHOa7AvNhGR-3KYocknm3axKKytSFiwYjrmBiSiszx0H5AUmYM9-eUB6wtSGI0qlF61wcvshYwc8-lUqgwDefI43QslkUq_mF2TQt2t2id1rUN0qOaXRBitkSzL8l4JamGKB-_i-=w1280"] },
+  { type: "A", text: "題目：有平面嗎？", images: ["https://lh3.googleusercontent.com/sitesv/AICyYda6LppVM2U25PWKB7At7PWMXT_gPzqAxRSPaKC3_lpXZeTmohmaf6560KxXRzJLXSVrGig-aPa_2d613enZbj3UyFnp2XDljWHg4Skyve9Zb8Ug1qoovoZXZNOrGcDzBIG_sib470yZ1NqYypRDrc3HngvIfI_qRhCY0DnYdjgiikqbdwmniQGLy9m2A6HdKq3i1beeCd2ZMuVFTNzu4mNUweTO-mkWbyBeknI=w1280"] },
+  { type: "A", text: "題目：有平面嗎？", images: ["https://lh3.googleusercontent.com/sitesv/AICyYdZQVfc7HnpuFcNk78xvOHIB8XEdapFpUKqHxCAGd07Aig3ixnxC0knOkMWTsPHZeSc7lEKpDI6eaNv0ptQlSKqnH3SYcu8bgVHuUGdi8GcWx2yQz4rWb3tYQ-HlgNtRWc_0cGvasO-SyHCXTmL5lkWzXKz_YkfUe__x0XPlOhlk9asVrhH9UCfeAZxloNV-MGSr-iUTybnvt6qgXkl0EB3w7vSR_BwdYnmh=w1280"] },
 
-  { type: "B", text: "題目：哪個面比較大？", images: ["https://lh3.googleusercontent.com/sitesv/AICyYdYM7F52XUAk_pwUsfDvTgvgbLOTRZkc6fotajbqIIOzygzym9ruP9Kt4gbL-q1aNwwXD48XRKaUuqUCsQgg9oJ315gwt7qHhsleOvVu_idKEPdtETpPIaexUq--lha7uuc59P2AVaeUgpPVeMnCP5hucxB0rNyzP-R_hdLgXNI3_MEommFu9tOpCMVghqlTC84tyAgPMOBxnOjLIZk62NmUgIQiHnD0nyqwI2w=w1280"] },
-  { type: "B", text: "題目：哪個面比較大？", images: ["https://lh3.googleusercontent.com/sitesv/AICyYdY5AhEF5w2G9soWEwcIH7ZWoioVqn1SZ5xOtpqbGfOZo3otC-6PFUaPRxnO4XHDMmEDIzoNFMfwChDDSAPSjgKQe-Seu9NG8xiydvhTsUmhgmTvWdwIBTKmTOA7fuS4Gb8KDpSrd-WsemGoO5-046msgzrwr2Y7NQkDWtcLmkQAFCeDnVvvZYPQmQjBkblAlsUxIw9keywXgGVa0OgmUlxE1tRt_77RZIQmFFA=w1280"] },
-  { type: "B", text: "題目：哪個面比較大？", images: ["https://lh3.googleusercontent.com/sitesv/AICyYdZ3-GuoacguvzUFLUxFDLt_zQunNgH-D1bBHkCvSeGKGcMQIgyQsposAIOjBRZtoLKlWrZPvhCSctJUMeWWi3hz-KtaIHyIsFwMFjC03ND5y2sGgpy6Z7QAxvDNyu-8CuqydB0sRgBUvxVdl6R4aBRiIUSMgU2l8XgI-XBK_WTXA6zgdFzO3_K9NVPsDzTHJoOaE08nHW7gvDkHK2Uj5gw8WKnq0AjuT3UcslU=w1280"] },
+  { type: "B", text: "題目：哪個面比較大？", images: ["https://lh3.googleusercontent.com/sitesv/AICyYdYmXgxA4AOhJgq92t-HmOPVBFzP0x5ICu3lFKaXlramSrkrt9HfJ7T5ODHv2pcwTXNDnYlsA5Rq4cti-zRdbBKXyfqCVUtl8xtAsYGv3mCYurKG1f3lcmNE2FuZ_h9aMJowrr3EqAAy7Fk_Mpegk8Y0FzAzPmiULNQiiX6kQ9BgHh6roTosnDSSLkr79jcDMNKYd3ugpk3eP7QldLSU4vKeAVLbB6L2dySSFwc=w1280"] },
+  { type: "B", text: "題目：哪個面比較大？", images: ["https://lh3.googleusercontent.com/sitesv/AICyYdZA2JlbGauc2ZC-gOcPuKS_koR9cT0WX3reQa-r0rHOzRWqSI06XqM9ocdZDBpy68N2ANMY5tjNVc3VmJeEsb5SdsVCJPizXxO_LjAPVCabOSL4VePXSgzVcdXeIMk3VijmirFvclRTXUvtCg16RzpN4u-p0yDIe9gC1kA4Tmd2HF4Y9bwi9AgdCHZTegThLifn9zF7IWvcnOJpDaFXEB5O9d1E54R1vBoynOI=w1280"] },
+  { type: "B", text: "題目：哪個面比較大？", images: ["https://lh3.googleusercontent.com/sitesv/AICyYdYFksbRS-IqC0rK3N33FXOt2PBreXs1S9HuorapNd_kfePO7atqohfmeYhAnEffLC4qb33NuQjR9Q52DPZKtaGJvv-wdiDwz_JeUtuAfvrDvgCtU21J0PE7NDUZkOF7qedthRg_y-7L6MUvFgNtr2sT1a8005Gp0nx-H3iPLKoZyGNZMS7QQIaRCBAELqZfUkGMf1DQeHfi5M-Ytm_oDFT_0VB-T2I7J5sNASM=w1280"] },
 
   { type: "C", text: "題目：怎麼比較？", images: [
-    "https://lh3.googleusercontent.com/sitesv/AICyYdaeuh2Lo-lHI1t5hG_fy12xwjxrJit-Ba-YD0K9zs2nk8Sbvziz9cw0jInMiHIsTfTvz-YYF0D9PEeNezMyZOmhx18GCgS8GIfXv64nFuOFbqxmDhNVXMZzJiBt_qUjhmDM7mZT5hyh_oSj6nBzB1Xn5-IPc-IwIGPFZF11otRg24prYDQj4q-ChjCE1jW9y8UIOp_YSgw9ZoGhCqEPegLVSd5tHF0LR8NHo7o=w1280",
-    "https://lh3.googleusercontent.com/sitesv/AICyYdY6EEfBHgjWQ50nsArmuyBTmw7hb49VTskWI7DRR09Big2ZYW3YNIyiM0bqVBHkfbr7BvCLwJSFo7Rt4O4aOVvxnziF5EWVuAsIHbRqMb0zRLdXVe2dsqyvVUabdfg71dNO7-e4zL4guC_CDstCCZIHUMM_cr845zTKzRgWJLDdU1CPfVOkAn31qJxiIw1CU9nljvYLD-rvPh515IRoccfLymYbmZa0Pn0ljzU=w1280"
+    "https://lh3.googleusercontent.com/sitesv/AICyYdatMjJqCO57w-JGpkkUL1IM-u_XKAkdBKOMBUOtQoM-xkoYTjWIF-KVYD5qgzsPQejtHCFV1Ac5HxJ29hYB31rYTsE7r6CWIF9CCWxl5C28XTMxGtSdugTAg67xotZWfQcLI3hP-5l6yUpX8oRx8HejU3MgRqpwaCZ_xiSUpyzq004xYjCW03sTyptLRAdMQsRuhm-UT9FoZP4xwdsCJiRyZQC2pkgM3oXc_XQ=w1280",
+    "https://lh3.googleusercontent.com/sitesv/AICyYdaowu3OvGTfzHd7S6KiTjr55ObiyBW67fTHkHEZUgIuNlHHVi0zIptpJ2pTrPlN4ntJSuYHwp5hvZL6UOHrmzMnLskKGkIehTrd9fIxoDXcV5Pbx8G3H_7ZMypyxL2VUOwFX0zLB5eKuHxpgc0_YiQiRwLH68z2dmWI0x2wrlixnBisUGT7dYJYuuVP-nmVqCdnGA3XGgWpP0PGjbYy4b8RMpER01Sbxhu9=w1280"
   ]},
 
   { type: "C", text: "題目：怎麼比較？", images: [
-    "https://lh3.googleusercontent.com/sitesv/AICyYdayUcnbt66QZKxAEk3NfmnmKJ71ALVHy6oYpUFrM2KZAm_uTvABEgJkLZh4ZqRboo9ZV4bVGBueab6K4YCaaaf7dm67uzATf4XMseK7kSZmXFfs85np7-ax6fDzPrb228SpEyqNJ0OX17FhcHKDf2CQv_Q8wFzhEbLQ0o1UtSTA0YQKfv3RRKS4y33TuWsg7TyhrfmeyUqwYjcTYm9W6XsNIyJw-d6KliW8=w1280",
-    "https://lh3.googleusercontent.com/sitesv/AICyYdaxtDdV750b2q9-g1xgDzIzuc39eLmKHP1Uz9NE_AqZXK6rMH9Hf-F92NPqKJEMhtFE5zDb0t8aCNVIKs-5oK23Qp8aKavEAu4N7kUAmD_NmDVldLTTuAY7pCuGzTIEyw_OKeWW98DVPE-7Rpi6Yu0eMY0VNrgj1jRC8bTG0QPxHmtxv-plQO2APjj7WdJJ0OnwuhF5_HGbe3CJ_S1oHGrwAQ2sfgQYt5C-=w1280"
+    "https://lh3.googleusercontent.com/sitesv/AICyYdbnuZOCiFRCPyPyuAclUDO64LgL5hPWtn9kOdMoOOXv5Hhutdn5vlYK_8sXRkcqBZqUk10q2wsuYvh4RQPx7EjWB9rp65kpRqr5aA8nFLTRzBmMbeV0yNk6E7HC3HASxs-0KGgSR2ELtqJbo0GPcBsrDv3-_KytelUNCKGv3D6XzAQ6ltz7Kpfif9XOM19pv3uVnaa23QGTfwY83vx6plIwBN792z4Zb60nr3k=w1280",
+    "https://lh3.googleusercontent.com/sitesv/AICyYdZKUTdQhvdQ0zOLMICBEjQBeKgPaNkhdQ4KnQj9l4NxqManRwaIiRaTknUR_Bfv1TAeEtV2OTKg3RzcPswtMWlUk0ey8jfMuqOA3PgiM5vc-bDllEqP2C9kQyEbKWFFiE5Wiq3DADYwI2wFj4hhL95jBSvyDkYsgnq7haT_XKrbJSC-HHebJyP83DHUnwTidOeeIxD5XgYJSUb2BexcL6-jrnRzdU1RcZLBY3E=w1280"
   ]},
 
   { type: "C", text: "題目：怎麼比較？", images: [
-    "https://lh3.googleusercontent.com/sitesv/AICyYdZM9wE_lxsNcZArsp3TIUo5WP2LAeq88Sx17rk6wC3JPChHvM3X3kBc3Zk5iO9LpeDvGrfSzZeY2Zs1OARpXE4c4EdWIdY7ekVjQYMBmUSfZne0A4FclzWWh9JznKJi9nUieBF-wjOi_bE4sVQ-Qmz3rYxBBhoIhIM2fJ--C7AJIiY9OzIuGa8nTGVH0DKEaRBPb2S95A95SJIxb43ZsE6jKYzQ03GZ8MISi9Y=w1280",
-    "https://lh3.googleusercontent.com/sitesv/AICyYdYHBnQVxuijoTaoAqJIt656mevt_reDa2Gae4_Z2oTEJYPUOyt2gVC8GRC6mUxCxh4gqa9xo0_9T3NrqeD8kG186HUjL5BlMzMaUYUz2ZoEo3AQZUDgKeC4tnA8tAjtAByCpavzFvaMRFwWbeJsrZ7y7uuDOcqtCcg_m3oAHceQ4WN3w0mhHA7cLCwFKcABfVYLjtZ05YpJhn26Tj7m8RNs3TVOyChOcfO8kFE=w1280"
+    "https://lh3.googleusercontent.com/sitesv/AICyYdY1pQnZjN5ACg2_zFsXQ28SSSADy7DMVv5qUkIDiDD9c3RNFocMa4TgcN8vfJw6yrcRWLBE_9N3dBlD5tN4NnzL9V6UnlNFxhU6FTpM42vMuDFsEZydjrzYxfkEtv0JiyOtn_Svec16bOfZUciVClu_LSX65vgUGqCoLIvtIwv0jC3Tnce0oB6JMDEM__O5bvqw2-azEkay9wk_l_eMWA7GwX7Gk6XJttI-aBk=w1280",
+    "https://lh3.googleusercontent.com/sitesv/AICyYdaN3PtwkK_PrlyQ2LJYTs60sbTgXF2nJTqnYGK2gkQVQKfHRkflHt5T1LKCLlrmkErIGSB2GQoXzj0QMMLkU-mpHpNBTqfSI6YNSUg9xrZOewqlu5qawvpCo28HP4UGKDiETwxoL8wQJak17HYBkkfJp5T8ce4WpoY1pNSSDFwyE9iJSUI7KAVQUZTMkacHmTgjQICuiFXeHduDny5AR7hF_LhljJggCPG9ZFk=w1280"
   ]}
 ];
 
