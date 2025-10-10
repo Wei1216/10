@@ -153,7 +153,7 @@ function startLottery() {
   const progressFill = document.getElementById('progressFill');
 
   numberDisplay.className = 'number spinning';
-  // 將 '抽籤中...' 改為含注音
+  // 使用 innerHTML 更新中文狀態
   statusText.innerHTML = '<ruby>抽<rt>ㄔㄡ</rt></ruby><ruby>籤<rt>ㄑㄧㄢ</rt></ruby><ruby>中<rt>ㄓㄨㄥ</rt></ruby>...';
   progressFill.style.width = '0%';
 
@@ -176,7 +176,7 @@ function startLottery() {
     const finalNumber = getRandomNumber();
     numberDisplay.textContent = finalNumber;
     numberDisplay.className = 'number final-result';
-    // 將狀態文字改為含注音
+    // 使用 innerHTML 更新中文狀態
     statusText.innerHTML = `🎉 <ruby>抽<rt>ㄔㄡ</rt></ruby><ruby>中<rt>ㄓㄨㄥ</rt></ruby><ruby>號<rt>ㄏㄠˋ</rt></ruby><ruby>碼<rt>ㄇㄚˇ</rt></ruby>：${finalNumber}`;
     progressFill.style.width = '100%';
     isRunning = false;
@@ -185,7 +185,8 @@ function startLottery() {
 
 document.getElementById("lotteryBtn").onclick = startLottery;
 
-/* 步驟 3: 修改 questionPool 中的所有文字為 <ruby> 格式 */
+/* ====== 抽題邏輯 ====== */
+// 所有題目文本都已轉換為 <ruby> 格式
 const questionPool = [
   { type: "A", text: "<ruby>題<rt>ㄊㄧˊ</rt></ruby><ruby>目<rt>ㄇㄨˋ</rt></ruby>：<ruby>有<rt>ㄧㄡˇ</rt></ruby><ruby>平<rt>ㄆㄧㄥˊ</rt></ruby><ruby>面<rt>ㄇㄧㄢˋ</rt></ruby><ruby>嗎<rt>ㄇㄚ</rt></ruby>", images: ["https://lh3.googleusercontent.com/sitesv/AICyYdbarS5pY_NVH8QpOD10DWz-WbDTi50AE8P2wUbffJxaqKz53jlq2_0-9w9r-ZrxWYWzQirHp8P6HJsn31pIn9amoMRRIFL5knSrJlKBQJ0NGC4CK1ekvH1MUVhaEQhi6fkEbLEZlS_V9hmlgKz7ck-G9VBoQSTSuAuNwginpwezi2jDl9C7QrCnHayLMkv1ifdEF4K5M6CyLgh37mfPfpYAPArct7LP5qkC=w1280"] },
   { type: "A", text: "<ruby>題<rt>ㄊㄧˊ</rt></ruby><ruby>目<rt>ㄇㄨˋ</rt></ruby>：<ruby>有<rt>ㄧㄡˇ</rt></ruby><ruby>平<rt>ㄆㄧㄥˊ</rt></ruby><ruby>面<rt>ㄇㄧㄢˋ</rt></ruby><ruby>嗎<rt>ㄇㄚ</rt></ruby>？", images: ["https://lh3.googleusercontent.com/sitesv/AICyYdaG8_9CznTTVvbvrlpwB8rpwQiY6FXGutOT3ZurqLthcbAGLDvSQpkPRVbszY0eYn-SPjJEd7hp3RhVgC8HEGb7hWuAaXkPzGjN8M2IBnOQgGif0iPOIQPkeXCZV8w2pC4xGpCnTj57x_OSa_JFOMHytWHgko7Y0oXejcFEx7C-1diRoYBj2FENXO0AQByqXKfivnA7ERTmwDNl7EXRY10Cgh-E66Bq3PPfEWI=w1280"] },
@@ -226,7 +227,7 @@ img.onclick = handleImageClick;
 // === 抽題函式 ===
 function startMarquee() {
   if (remaining.length === 0) {
-    // 將 '所有題目都抽完啦！' 改為含注音
+    // 使用 innerHTML 更新中文狀態
     marquee.innerHTML = "<ruby>所<rt>ㄙㄨㄛˇ</rt></ruby><ruby>有<rt>ㄧㄡˇ</rt></ruby><ruby>題<rt>ㄊㄧˊ</rt></ruby><ruby>目<rt>ㄇㄨˋ</rt></ruby><ruby>都<rt>ㄉㄡ</rt></ruby><ruby>抽<rt>ㄔㄡ</rt></ruby><ruby>完<rt>ㄨㄢˊ</rt></ruby><ruby>啦<rt>ㄌㄚ</rt></ruby>！";
     return;
   }
@@ -247,7 +248,7 @@ function startMarquee() {
   }, 3000);
 }
 
-// === 控制前三題必出特定類型 (此函式不需修改) ===
+// === 控制前三題必出特定類型 ===
 function getNextQuestion() {
   drawCount++;
 
@@ -275,7 +276,7 @@ function showImage(q) {
   currentImgIndex = 0;
 }
 
-// === 點擊圖片進行切換或重置 (此函式不需修改) ===
+// === 點擊圖片進行切換或重置 ===
 function handleImageClick() {
   if (!currentQ) return;
   currentImgIndex++;
@@ -291,7 +292,7 @@ function resetAfterQuestion() {
   remaining = remaining.filter(q => q !== currentQ);
   currentQ = null;
   img.style.display = "none";
-  // 將 '點擊「開始抽題」' 改為含注音
+  // 使用 innerHTML 更新中文狀態
   marquee.innerHTML = "<ruby>點<rt>ㄉㄧㄢˇ</rt></ruby><ruby>擊<rt>ㄐㄧˊ</rt></ruby>「<ruby>開<rt>ㄎㄞ</rt></ruby><ruby>始<rt>ㄕˇ</rt></ruby><ruby>抽<rt>ㄔㄡ</rt></ruby><ruby>題<rt>ㄊㄧˊ</rt></ruby>」";
   startBtn.style.display = "block";
 }
