@@ -168,25 +168,25 @@ document.getElementById("lotteryBtn").onclick = startLottery;
 
 /* ====== 抽題邏輯 ====== */
 const questionPool = [
-  { type: "A", text: "題目1：有平面嗎", images: ["https://lh3.googleusercontent.com/sitesv/AICyYdYjEXnyhcVEQkat3jwBW-2icDxy_fohFaZdtbCORwg4LICsp8-ES4uAh6w4GbTsE0pzkXXD_EChGcnfCtcFSS_3W1PUH4vSsvcoVyWnLjLuyAEiaSpqVAucnqQfSEpCAbTa8ypASgSmPUL3Ob5A2LafH1KHE5t1U7zSyNu5BIcdvW1d3BQTBcGORnlsUssodLjNKJ9Oa_n_Yef-Z2I-s_w_ddWxeXXDyL7vSmU=w1280"] },
-  { type: "A", text: "題目2：有平面嗎？", images: ["https://lh3.googleusercontent.com/sitesv/AICyYdY9eXHtfGCtxhVDEER378hkASZ655xeUto6RwXjEX6_jWntOPgVoMuxsZJofByWhPUQHrenuGu-k-9o32NgJtswzAXj15O9GssMM_XqT1CWWSETh6BO4cChhwCrqlCLlhXoHcAUAKV013vERwDrSE4AHdQKQHlRQ7sd3m0wQvqbjDwhxLzERBjnQBeErChGpxY3OR78HZkjvIqT4fLKZNb_c6rmGHQiJIGk=w1280"] },
-  { type: "A", text: "題目3：有平面嗎？", images: ["https://lh3.googleusercontent.com/sitesv/AICyYdb535IwnRGSZni8azBcPNBfmuaUDhFBxt1TQopjjqs_F0CvO75tGUfDQtN1UMtNQu3eROCFQ4l6MCHbf8oiTe4IJH7O0gdxnut_g5ZZl2L-tW24haOeu6RXPFKub1Ua375g17iVw-NFJDyET-b-BLTM9zEBnCQWw4aQOboPCcsERTIoE8k2Mh030hi4eECJbg4JF7nBPMjx5nvBwtNfLBdQtr591kXwdkkTPhU=w1280"] },
+  { type: "A", text: "題目：有平面嗎", images: ["https://lh3.googleusercontent.com/sitesv/AICyYdbarS5pY_NVH8QpOD10DWz-WbDTi50AE8P2wUbffJxaqKz53jlq2_0-9w9r-ZrxWYWzQirHp8P6HJsn31pIn9amoMRRIFL5knSrJlKBQJ0NGC4CK1ekvH1MUVhaEQhi6fkEbLEZlS_V9hmlgKz7ck-G9VBoQSTSuAuNwginpwezi2jDl9C7QrCnHayLMkv1ifdEF4K5M6CyLgh37mfPfpYAPArct7LP5qkC=w1280"] },
+  { type: "A", text: "題目：有平面嗎？", images: ["https://lh3.googleusercontent.com/sitesv/AICyYdaG8_9CznTTVvbvrlpwB8rpwQiY6FXGutOT3ZurqLthcbAGLDvSQpkPRVbszY0eYn-SPjJEd7hp3RhVgC8HEGb7hWuAaXkPzGjN8M2IBnOQgGif0iPOIQPkeXCZV8w2pC4xGpCnTj57x_OSa_JFOMHytWHgko7Y0oXejcFEx7C-1diRoYBj2FENXO0AQByqXKfivnA7ERTmwDNl7EXRY10Cgh-E66Bq3PPfEWI=w1280"] },
+  { type: "A", text: "題目：有平面嗎？", images: ["https://lh3.googleusercontent.com/sitesv/AICyYdaES5TFi3dcJAfIvhEE_aCJ3cQKny3xaj2zq5mHhY9KVJnj3m6HPkHyOJR82HWc9IFs8WvBntw7yFlE-5lOSTCiewAMKbWWw6QLNHBqTtP9hSOiuaSJhYwfONgJdvRDFLxBDmezytPd6lz_NUpM9XdXRexudPDOMyZfKqx7kvnVVLC6n7KvR3K1lo5TinspI1jq_L7NBQ59XaAFLPdJ1apiL0I89ot8qgP6=w1280"] },
 
-  { type: "B", text: "題目4：哪個面比較大？", images: ["https://lh3.googleusercontent.com/sitesv/AICyYdY4YPFUy-sUATsUKYb0i1LZU1Di4L292_24n3DYch_RzVmpwMznPR649yrw40nBPSdTfrAgHoSj1Aqzky58jom7jdel-KL4jJgIIMjwnOHHF1cAdXeMhI0SY2yRCK4FAVdxiknxo0ePBTHTo2-gM2sbwDQf10WIFwtXX8eaW1sjl6tY6GcsEKrbeHXyWCKJSxwhD0UWJrdrSTnJtGpe2K-SzQsPX7O1aFuZb1k=w1280"] },
-  { type: "B", text: "題目5：哪個面比較大？", images: ["https://lh3.googleusercontent.com/sitesv/AICyYdYKSouri6hJwWfGS_f-4XAtMrR5Pp8KAlCm9winr96G_dzCBNE66a2-MImgkbB0VqtM2cpfrYQBlbDrFM0OFMGehrzgzuhKgh8Xh2PDnh0jFlM2ykGtfhgAnrqEmq3ASaPFh_sWWyhlpErGxjrO28sr9tyDdhqoceFQKmG11U-azEEsCpxlP4Q8421-IWxzuN8nvfih-J90ol-1o4RPP3lR8e1Tt-isYzx8l5w=w1280"] },
-  { type: "B", text: "題目6：哪個面比較大？", images: ["https://lh3.googleusercontent.com/sitesv/AICyYdb3OBuTY5jdvoz2zu32xKb-qG5kK3AePqANvkeUFncYVkMAYfJeTD6d5tDI4aXNF2I2Osx_9sNB-sNXFJIgvqMsKROdq2lz0pX4PvSd1pw7KWNaWmboOMFvpZ7iZR6eXBfSClolH0ujXptK0G4XPIiSsgnUWTLwXoDWxMw-iKulERQUf5siBG2JkwNYZr89HbtBKJy4HUGYFcvFKYZSJyBuh8D3k1ZYSnlkpac=w1280"] },
+  { type: "B", text: "題目：哪個面比較大？", images: ["https://lh3.googleusercontent.com/sitesv/AICyYdY4YPFUy-sUATsUKYb0i1LZU1Di4L292_24n3DYch_RzVmpwMznPR649yrw40nBPSdTfrAgHoSj1Aqzky58jom7jdel-KL4jJgIIMjwnOHHF1cAdXeMhI0SY2yRCK4FAVdxiknxo0ePBTHTo2-gM2sbwDQf10WIFwtXX8eaW1sjl6tY6GcsEKrbeHXyWCKJSxwhD0UWJrdrSTnJtGpe2K-SzQsPX7O1aFuZb1k=w1280"] },
+  { type: "B", text: "題目：哪個面比較大？", images: ["https://lh3.googleusercontent.com/sitesv/AICyYdYKSouri6hJwWfGS_f-4XAtMrR5Pp8KAlCm9winr96G_dzCBNE66a2-MImgkbB0VqtM2cpfrYQBlbDrFM0OFMGehrzgzuhKgh8Xh2PDnh0jFlM2ykGtfhgAnrqEmq3ASaPFh_sWWyhlpErGxjrO28sr9tyDdhqoceFQKmG11U-azEEsCpxlP4Q8421-IWxzuN8nvfih-J90ol-1o4RPP3lR8e1Tt-isYzx8l5w=w1280"] },
+  { type: "B", text: "題目：哪個面比較大？", images: ["https://lh3.googleusercontent.com/sitesv/AICyYdb3OBuTY5jdvoz2zu32xKb-qG5kK3AePqANvkeUFncYVkMAYfJeTD6d5tDI4aXNF2I2Osx_9sNB-sNXFJIgvqMsKROdq2lz0pX4PvSd1pw7KWNaWmboOMFvpZ7iZR6eXBfSClolH0ujXptK0G4XPIiSsgnUWTLwXoDWxMw-iKulERQUf5siBG2JkwNYZr89HbtBKJy4HUGYFcvFKYZSJyBuh8D3k1ZYSnlkpac=w1280"] },
 
-  { type: "C", text: "題目7：怎麼比較？", images: [
+  { type: "C", text: "題目：怎麼比較？", images: [
     "https://lh3.googleusercontent.com/sitesv/AICyYdZVwNpvUrZML4W12wZSzjnfRwPd0gY5dVbP1TihbGzuF0tS8xqTwzR2xBDVYuGx_YaBjvXo6OxQMWT9z8TALwzDMTiLWZuo1kH54NwtCAWS9zIKCUAYlnkciti2s0h50omdXZ4Jzvacpu1AfyqvTA0jEvAUshTJjkzM-CS02aW4JzQjA2bhuhkQCsCOZRFLtuBBbowSnY2IkX69G-VqcDf58IYjxXzTQc4a5dQ=w1280",
     "https://lh3.googleusercontent.com/sitesv/AICyYdbUizUyLH1n4l4GrJ5WhVe_o_ilcWlCC4KNAlH0tBVcXbkGNHLFzCxj5UIECUIr7q9fpcmKAwCSXUwXQQC1FD2V0B3_pTpPGGEJdnhGoqtb-LuRzzd1c0OKmjfJV0YMxZwc4aIS0MJc_Rx24Kvq_y0VWDUS07FnsAAYbOtdZdasMyehPt_7Wb8lTgkqh-TEqSYkXvtzH8b-IVwNV8TtAcKTqf-qNEV6Q8yV6u8=w1280"
   ]},
 
-  { type: "C", text: "題目8：怎麼比較？", images: [
+  { type: "C", text: "題目：怎麼比較？", images: [
     "https://lh3.googleusercontent.com/sitesv/AICyYdaz2lZYjNZ8yd4P18wBciu8OaYCWfkIHPwPWgwnePajuXdBg-D8M88o8oKP0uepp6PuVEgXONvJNkXEOnAqx8ro4cASAv4RrSdSoxSErA381A6aOmf0K_dqFAkEcxtzYZwq7fyhywp8GGXLeRRSybX59uupvrdTJ0a1r-KAkxrSQ4nlsTzcKR9AKXv9hmq6HX_T6FSzlNf3Z-BiDWbW9uZPM2yAkxx9gdkM=w1280",
     "https://lh3.googleusercontent.com/sitesv/AICyYda-o_uPxajuXTKfhsgYpnD96wSYndiIHFNos3W8NzrKLS5i6jRNaHy6pjjR9tdhQJiAnIQVTBJco0mINPpRPh1FUsrcwoFSgXf1cL6zQm4_wLcTOFEqDAHB37Vcr0FR6pye1FUS8nAy6aSczlznoad6qxxQncKI9yCyO6hTa9a9ZlqQN0we04g-1SozKCrjMWh75GnNqMrWqNjizN5_o7V-Pzdy0YyruZt1=w1280"
   ]},
 
-  { type: "C", text: "題目9：怎麼比較？", images: [
+  { type: "C", text: "題目：怎麼比較？", images: [
     "https://lh3.googleusercontent.com/sitesv/AICyYdbrsE3Kvy44DGDZnjrWxy8AMzf_6_Etr2v9MLdp7uB1xEYkSu9rbvOtPb5o_Y4KYH1twC18aRRRkr-qqlZiypppL9X4IfsYthY2_6UbVG0obIzxmq44kTJxZu0rcDtsmvNHGUimRdTAcXdiiWnThGhJGqHiNJ8Hb409t8APuDXJtPx6Qygp_UaKStHN_Wdos8zEAKwY5FhxUh-t_z3-iWozKoRltAkHjDn1S5s=w1280",
     "https://lh3.googleusercontent.com/sitesv/AICyYda0SSgJSUnDX0R2UZM7mvyfwNdEJg1yfvJT3N2BCyDx3H-3I9Cog2uPgbcQ_T2OtBu7dGteS8lX0AeZurCJKRqgdbFgcY7nycI6XwKSp5Xd0koioHc-sSlTU4W0A0Dcw_YlbnT5g2J-emv2_TVJaECLEky6nw6KvHfSaducJbI8OnmMnnH4n9Fq_Ch_kRkl5DGV6zEKIqQ4kxEc8nwCKnCRTaUWrDMjVJVu_TE=w1280"
   ]}
