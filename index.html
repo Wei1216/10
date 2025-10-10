@@ -7,125 +7,127 @@
 <style>
 
 @font-face {
-  font-family: 'BpmfGenSenRounded'; /* 給字體一個自訂名稱 */
-  /* 請確認這個路徑是正確的 */
-  src: url('BpmfGenSenRounded-B.ttf') format('truetype'); 
-  font-weight: normal;
-  font-style: normal;
+  font-family: 'BpmfGenSenRounded'; /* 給字體一個自訂名稱 */
+  /* 請確認這個路徑是正確的 */
+  src: url('BpmfGenSenRounded.ttf') format('truetype'); 
+  font-weight: normal;
+  font-style: normal;
 }
-  
-  body {
-  margin: 0;
-  /* 確保第一個字體名稱與 @font-face 中的 family 名稱一致 */
-  font-family: "BpmfGenSenRounded", "Microsoft JhengHei", sans-serif; 
-  display: flex;
-  height: 100vh;
-  background: #f8f8f8;
-  }
+  
+  body {
+  margin: 0;
+  /* 確保第一個字體名稱與 @font-face 中的 family 名稱一致 */
+  font-family: "BpmfGenSenRounded", "Microsoft JhengHei", sans-serif; 
+  display: flex;
+  height: 100vh;
+  background: #f8f8f8;
+  }
 
-  /* === 左側：選號器 === */
-  .lottery-container {
-    flex: 0 0 200px;
-    background: rgba(255, 255, 255, 0.85);
-    border-right: 3px solid #98d0de;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 2px 0 8px rgba(0,0,0,0.1);
-    text-align: center;
-    padding: 20px;
-  }
+  /* === 左側：選號器 === */
+  .lottery-container {
+    flex: 0 0 200px;
+    background: rgba(255, 255, 255, 0.85);
+    border-right: 3px solid #98d0de;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+    text-align: center;
+    padding: 20px;
+  }
 
-  .title { font-size: 20px; font-weight: bold; color: #333; margin-bottom: 10px; }
-  .number-display {
-    width: 70px; height: 50px;
-    border: 3px solid #98d0de;
-    border-radius: 8px;
-    display: flex; justify-content: center; align-items: center;
-    background: linear-gradient(45deg, #f8f9ff, #e8ecff);
-  }
-  .number { font-size: 26px; font-weight: bold; color: #98d0de; }
-  .progress-bar {
-    width: 120px; height: 6px;
-    background: #eee; border-radius: 3px;
-    margin: 10px auto; overflow: hidden;
-  }
-  .progress-fill {
-    height: 100%;
-    background: linear-gradient(45deg, #98d0de, #7bc4d4);
-    width: 0%;
-    transition: width 0.1s linear;
-  }
-  .status-text { font-size: 13px; color: #666; margin-top: 5px; }
-  .lottery-btn {
-    margin-top: 15px;
-    padding: 6px 16px;
-    background: linear-gradient(45deg, #98d0de, #7bc4d4);
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-  }
+  .title { font-size: 20px; font-weight: bold; color: #333; margin-bottom: 10px; }
+  .number-display {
+    width: 70px; height: 50px;
+    border: 3px solid #98d0de;
+    border-radius: 8px;
+    display: flex; justify-content: center; align-items: center;
+    background: linear-gradient(45deg, #f8f9ff, #e8ecff);
+  }
+  .number { font-size: 26px; font-weight: bold; color: #98d0de; }
+  .progress-bar {
+    width: 120px; height: 6px;
+    background: #eee; border-radius: 3px;
+    margin: 10px auto; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(45deg, #98d0de, #7bc4d4);
+    width: 0%;
+    transition: width 0.1s linear;
+  }
+  .status-text { font-size: 13px; color: #666; margin-top: 5px; }
+  .lottery-btn {
+    margin-top: 15px;
+    padding: 6px 16px;
+    background: linear-gradient(45deg, #98d0de, #7bc4d4);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    /* 新增：確保按鈕使用指定的字體 */
+    font-family: "BpmfGenSenRounded", "Microsoft JhengHei", sans-serif;
+  }
 
-  .spinning { animation: spin 0.1s linear infinite; }
-  @keyframes spin {
-    0% { transform: translateY(-20px); opacity: 0.5; }
-    50% { transform: translateY(0); opacity: 1; }
-    100% { transform: translateY(20px); opacity: 0.5; }
-  }
+  .spinning { animation: spin 0.1s linear infinite; }
+  @keyframes spin {
+    0% { transform: translateY(-20px); opacity: 0.5; }
+    50% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(20px); opacity: 0.5; }
+  }
 
-  /* === 右側：跑馬燈／圖片顯示區 === */
-  #main-area {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    position: relative;
-  }
-  #marquee {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #333;
-    text-align: center;
-    padding: 20px;
-  }
-  #main-image {
-    max-width: 90%;
-    max-height: 85%;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    display: none;
-  }
-  #start-btn {
-    margin-top: 30px;
-    padding: 10px 25px;
-    font-size: 1.2rem;
-    background: linear-gradient(45deg, #98d0de, #7bc4d4);
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-  }
+  /* === 右側：跑馬燈／圖片顯示區 === */
+  #main-area {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+  }
+  #marquee {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    padding: 20px;
+  }
+  #main-image {
+    max-width: 90%;
+    max-height: 85%;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    display: none;
+  }
+  #start-btn {
+    margin-top: 30px;
+    padding: 10px 25px;
+    font-size: 1.2rem;
+    background: linear-gradient(45deg, #98d0de, #7bc4d4);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    /* 新增：確保按鈕使用指定的字體 */
+    font-family: "BpmfGenSenRounded", "Microsoft JhengHei", sans-serif;
+  }
 </style>
 </head>
 <body>
 
-<!-- 左側：選號器 -->
 <div class="lottery-container">
-  <div class="title">選號器</div>
-  <div class="number-display"><div class="number" id="numberDisplay">?</div></div>
-  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-  <div class="status-text" id="statusText">等待啟動</div>
-  <button class="lottery-btn" id="lotteryBtn">抽號碼</button>
+  <div class="title">選號器</div>
+  <div class="number-display"><div class="number" id="numberDisplay">?</div></div>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="status-text" id="statusText">等待啟動</div>
+  <button class="lottery-btn" id="lotteryBtn">抽號碼</button>
 </div>
 
-<!-- 右側：題目區 -->
 <div id="main-area">
-  <div id="marquee">點擊「按」</div>
-  <img id="main-image" src="">
-  <button id="start-btn">按</button>
+  <div id="marquee">點擊「按」</div>
+  <img id="main-image" src="">
+  <button id="start-btn">按</button>
 </div>
 
 <script>
@@ -134,72 +136,72 @@ let isRunning = false;
 let animationInterval, progressInterval;
 
 function getRandomNumber() {
-  return Math.floor(Math.random() * 25) + 2; // 2~26
+  return Math.floor(Math.random() * 25) + 2; // 2~26
 }
 
 function startLottery() {
-  if (isRunning) return;
-  isRunning = true;
+  if (isRunning) return;
+  isRunning = true;
 
-  const numberDisplay = document.getElementById('numberDisplay');
-  const statusText = document.getElementById('statusText');
-  const progressFill = document.getElementById('progressFill');
+  const numberDisplay = document.getElementById('numberDisplay');
+  const statusText = document.getElementById('statusText');
+  const progressFill = document.getElementById('progressFill');
 
-  numberDisplay.className = 'number spinning';
-  statusText.textContent = '抽籤中...';
-  progressFill.style.width = '0%';
+  numberDisplay.className = 'number spinning';
+  statusText.textContent = '抽籤中...';
+  progressFill.style.width = '0%';
 
-  let progress = 0;
-  const totalTime = 3000;
-  const updateInterval = 50;
+  let progress = 0;
+  const totalTime = 3000;
+  const updateInterval = 50;
 
-  animationInterval = setInterval(() => {
-    numberDisplay.textContent = getRandomNumber();
-  }, 100);
+  animationInterval = setInterval(() => {
+    numberDisplay.textContent = getRandomNumber();
+  }, 100);
 
-  progressInterval = setInterval(() => {
-    progress += updateInterval;
-    progressFill.style.width = (progress / totalTime) * 100 + '%';
-    if (progress >= totalTime) clearInterval(progressInterval);
-  }, updateInterval);
+  progressInterval = setInterval(() => {
+    progress += updateInterval;
+    progressFill.style.width = (progress / totalTime) * 100 + '%';
+    if (progress >= totalTime) clearInterval(progressInterval);
+  }, updateInterval);
 
-  setTimeout(() => {
-    clearInterval(animationInterval);
-    const finalNumber = getRandomNumber();
-    numberDisplay.textContent = finalNumber;
-    numberDisplay.className = 'number final-result';
-    statusText.textContent = `🎉 抽中號碼：${finalNumber}`;
-    progressFill.style.width = '100%';
-    isRunning = false;
-  }, totalTime);
+  setTimeout(() => {
+    clearInterval(animationInterval);
+    const finalNumber = getRandomNumber();
+    numberDisplay.textContent = finalNumber;
+    numberDisplay.className = 'number final-result';
+    statusText.textContent = `🎉 抽中號碼：${finalNumber}`;
+    progressFill.style.width = '100%';
+    isRunning = false;
+  }, totalTime);
 }
 
 document.getElementById("lotteryBtn").onclick = startLottery;
 
 /* ====== 抽題邏輯 ====== */
 const questionPool = [
-  { type: "A", text: "題目：有平面嗎", images: ["https://lh3.googleusercontent.com/sitesv/AICyYdbarS5pY_NVH8QpOD10DWz-WbDTi50AE8P2wUbffJxaqKz53jlq2_0-9w9r-ZrxWYWzQirHp8P6HJsn31pIn9amoMRRIFL5knSrJlKBQJ0NGC4CK1ekvH1MUVhaEQhi6fkEbLEZlS_V9hmlgKz7ck-G9VBoQSTSuAuNwginpwezi2jDl9C7QrCnHayLMkv1ifdEF4K5M6CyLgh37mfPfpYAPArct7LP5qkC=w1280"] },
-  { type: "A", text: "題目：有平面嗎？", images: ["https://lh3.googleusercontent.com/sitesv/AICyYdaG8_9CznTTVvbvrlpwB8rpwQiY6FXGutOT3ZurqLthcbAGLDvSQpkPRVbszY0eYn-SPjJEd7hp3RhVgC8HEGb7hWuAaXkPzGjN8M2IBnOQgGif0iPOIQPkeXCZV8w2pC4xGpCnTj57x_OSa_JFOMHytWHgko7Y0oXejcFEx7C-1diRoYBj2FENXO0AQByqXKfivnA7ERTmwDNl7EXRY10Cgh-E66Bq3PPfEWI=w1280"] },
-  { type: "A", text: "題目：有平面嗎？", images: ["https://lh3.googleusercontent.com/sitesv/AICyYdaES5TFi3dcJAfIvhEE_aCJ3cQKny3xaj2zq5mHhY9KVJnj3m6HPkHyOJR82HWc9IFs8WvBntw7yFlE-5lOSTCiewAMKbWWw6QLNHBqTtP9hSOiuaSJhYwfONgJdvRDFLxBDmezytPd6lz_NUpM9XdXRexudPDOMyZfKqx7kvnVVLC6n7KvR3K1lo5TinspI1jq_L7NBQ59XaAFLPdJ1apiL0I89ot8qgP6=w1280"] },
+  { type: "A", text: "題目：有平面嗎", images: ["https://lh3.googleusercontent.com/sitesv/AICyYdbarS5pY_NVH8QpOD10DWz-WbDTi50AE8P2wUbffJxaqKz53jlq2_0-9w9r-ZrxWYWzQirHp8P6HJsn31pIn9amoMRRIFL5knSrJlKBQJ0NGC4CK1ekvH1MUVhaEQhi6fkEbLEZlS_V9hmlgKz7ck-G9VBoQSTSuAuNwginpwezi2jDl9C7QrCnHayLMkv1ifdEF4K5M6CyLgh37mfPfpYAPArct7LP5qkC=w1280"] },
+  { type: "A", text: "題目：有平面嗎？", images: ["https://lh3.googleusercontent.com/sitesv/AICyYdaG8_9CznTTVvbvrlpwB8rpwQiY6FXGutOT3ZurqLthcbAGLDvSQpkPRVbszY0eYn-SPjJEd7hp3RhVgC8HEGb7hWuAaXkPzGjN8M2IBnOQgGif0iPOIQPkeXCZV8w2pC4xGpCnTj57x_OSa_JFOMHytWHgko7Y0oXejcFEx7C-1diRoYBj2FENXO0AQByqXKfivnA7ERTmwDNl7EXRY10Cgh-E66Bq3PPfEWI=w1280"] },
+  { type: "A", text: "題目：有平面嗎？", images: ["https://lh3.googleusercontent.com/sitesv/AICyYdaES5TFi3dcJAfIvhEE_aCJ3cQKny3xaj2zq5mHhY9KVJnj3m6HPkHyOJR82HWc9IFs8WvBntw7yFlE-5lOSTCiewAMKbWWw6QLNHBqTtP9hSOiuaSJhYwfONgJdvRDFLxBDmezytPd6lz_NUpM9XdXRexudPDOMyZfKqx7kvnVVLC6n7KvR3K1lo5TinspI1jq_L7NBQ59XaAFLPdJ1apiL0I89ot8qgP6=w1280"] },
 
-  { type: "B", text: "題目：哪個面比較大？", images: ["https://lh3.googleusercontent.com/sitesv/AICyYdYM7F52XUAk_pwUsfDvTgvgbLOTRZkc6fotajbqIIOzygzym9ruP9Kt4gbL-q1aNwwXD48XRKaUuqUCsQgg9oJ315gwt7qHhsleOvVu_idKEPdtETpPIaexUq--lha7uuc59P2AVaeUgpPVeMnCP5hucxB0rNyzP-R_hdLgXNI3_MEommFu9tOpCMVghqlTC84tyAgPMOBxnOjLIZk62NmUgIQiHnD0nyqwI2w=w1280"] },
-  { type: "B", text: "題目：哪個面比較大？", images: ["https://lh3.googleusercontent.com/sitesv/AICyYdY5AhEF5w2G9soWEwcIH7ZWoioVqn1SZ5xOtpqbGfOZo3otC-6PFUaPRxnO4XHDMmEDIzoNFMfwChDDSAPSjgKQe-Seu9NG8xiydvhTsUmhgmTvWdwIBTKmTOA7fuS4Gb8KDpSrd-WsemGoO5-046msgzrwr2Y7NQkDWtcLmkQAFCeDnVvvZYPQmQjBkblAlsUxIw9keywXgGVa0OgmUlxE1tRt_77RZIQmFFA=w1280"] },
-  { type: "B", text: "題目：哪個面比較大？", images: ["https://lh3.googleusercontent.com/sitesv/AICyYdZ3-GuoacguvzUFLUxFDLt_zQunNgH-D1bBHkCvSeGKGcMQIgyQsposAIOjBRZtoLKlWrZPvhCSctJUMeWWi3hz-KtaIHyIsFwMFjC03ND5y2sGgpy6Z7QAxvDNyu-8CuqydB0sRgBUvxVdl6R4aBRiIUSMgU2l8XgI-XBK_WTXA6zgdFzO3_K9NVPsDzTHJoOaE08nHW7gvDkHK2Uj5gw8WKnq0AjuT3UcslU=w1280"] },
+  { type: "B", text: "題目：哪個面比較大？", images: ["https://lh3.googleusercontent.com/sitesv/AICyYdYM7F52XUAk_pwUsfDvTgvgbLOTRZkc6fotajbqIIOzygzym9ruP9Kt4gbL-q1aNwwXD48XRKaUuqUCsQgg9oJ315gwt7qHhsleOvVu_idKEPdtETpPIaexUq--lha7uuc59P2AVaeUgpPVeMnCP5hucxB0rNyzP-R_hdLgXNI3_MEommFu9tOpCMVghqlTC84tyAgPMOBxnOjLIZk62NmUgIQiHnD0nyqwI2w=w1280"] },
+  { type: "B", text: "題目：哪個面比較大？", images: ["https://lh3.googleusercontent.com/sitesv/AICyYdY5AhEF5w2G9soWEwcIH7ZWoioVqn1SZ5xOtpqbGfOZo3otC-6PFUaPRxnO4XHDMmEDIzoNFMfwChDDSAPSjgKQe-Seu9NG8xiydvhTsUmhgmTvWdwIBTKmTOA7fuS4Gb8KDpSrd-WsemGoO5-046msgzrwr2Y7NQkDWtcLmkQAFCeDnVvvZYPQmQjBkblAlsUxIw9keywXgGVa0OgmUlxE1tRt_77RZIQmFFA=w1280"] },
+  { type: "B", text: "題目：哪個面比較大？", images: ["https://lh3.googleusercontent.com/sitesv/AICyYdZ3-GuoacguvzUFLUxFDLt_zQunNgH-D1bBHkCvSeGKGcMQIgyQsposAIOjBRZtoLKlWrZPvhCSctJUMeWWi3hz-KtaIHyIsFwMFjC03ND5y2sGgpy6Z7QAxvDNyu-8CuqydB0sRgBUvxVdl6R4aBRiIUSMgU2l8XgI-XBK_WTXA6zgdFzO3_K9NVPsDzTHJoOaE08nHW7gvDkHK2Uj5gw8WKnq0AjuT3UcslU=w1280"] },
 
-  { type: "C", text: "題目：怎麼比較？", images: [
-    "https://lh3.googleusercontent.com/sitesv/AICyYdaeuh2Lo-lHI1t5hG_fy12xwjxrJit-Ba-YD0K9zs2nk8Sbvziz9cw0jInMiHIsTfTvz-YYF0D9PEeNezMyZOmhx18GCgS8GIfXv64nFuOFbqxmDhNVXMZzJiBt_qUjhmDM7mZT5hyh_oSj6nBzB1Xn5-IPc-IwIGPFZF11otRg24prYDQj4q-ChjCE1jW9y8UIOp_YSgw9ZoGhCqEPegLVSd5tHF0LR8NHo7o=w1280",
-    "https://lh3.googleusercontent.com/sitesv/AICyYdY6EEfBHgjWQ50nsArmuyBTmw7hb49VTskWI7DRR09Big2ZYW3YNIyiM0bqVBHkfbr7BvCLwJSFo7Rt4O4aOVvxnziF5EWVuAsIHbRqMb0zRLdXVe2dsqyvVUabdfg71dNO7-e4zL4guC_CDstCCZIHUMM_cr845zTKzRgWJLDdU1CPfVOkAn31qJxiIw1CU9nljvYLD-rvPh515IRoccfLymYbmZa0Pn0ljzU=w1280"
-  ]},
+  { type: "C", text: "題目：怎麼比較？", images: [
+    "https://lh3.googleusercontent.com/sitesv/AICyYdaeuh2Lo-lHI1t5hG_fy12xwjxrJit-Ba-YD0K9zs2nk8Sbvziz9cw0jInMiHIsTfTvz-YYF0D9PEeNezMyZOmhx18GCgS8GIfXv64nFuOFbqxmDhNVXMZzJiBt_qUjhmDM7mZT5hyh_oSj6nBzB1Xn5-IPc-IwIGPFZF11otRg24prYDQj4q-ChjCE1jW9y8UIOp_YSgw9ZoGhCqEPegLVSd5tHF0LR8NHo7o=w1280",
+    "https://lh3.googleusercontent.com/sitesv/AICyYdY6EEfBHgjWQ50nsArmuyBTmw7hb49VTskWI7DRR09Big2ZYW3YNIyiM0bqVBHkfbr7BvCLwJSFo7Rt4O4aOVvxnziF5EWVuAsIHbRqMb0zRLdXVe2dsqyvVUabdfg71dNO7-e4zL4guC_CDstCCZIHUMM_cr845zTKzRgWJLDdU1CPfVOkAn31qJxiIw1CU9nljvYLD-rvPh515IRoccfLymYbmZa0Pn0ljzU=w1280"
+  ]},
 
-  { type: "C", text: "題目：怎麼比較？", images: [
-    "https://lh3.googleusercontent.com/sitesv/AICyYdayUcnbt66QZKxAEk3NfmnmKJ71ALVHy6oYpUFrM2KZAm_uTvABEgJkLZh4ZqRboo9ZV4bVGBueab6K4YCaaaf7dm67uzATf4XMseK7kSZmXFfs85np7-ax6fDzPrb228SpEyqNJ0OX17FhcHKDf2CQv_Q8wFzhEbLQ0o1UtSTA0YQKfv3RRKS4y33TuWsg7TyhrfmeyUqwYjcTYm9W6XsNIyJw-d6KliW8=w1280",
-    "https://lh3.googleusercontent.com/sitesv/AICyYdaxtDdV750b2q9-g1xgDzIzuc39eLmKHP1Uz9NE_AqZXK6rMH9Hf-F92NPqKJEMhtFE5zDb0t8aCNVIKs-5oK23Qp8aKavEAu4N7kUAmD_NmDVldLTTuAY7pCuGzTIEyw_OKeWW98DVPE-7Rpi6Yu0eMY0VNrgj1jRC8bTG0QPxHmtxv-plQO2APjj7WdJJ0OnwuhF5_HGbe3CJ_S1oHGrwAQ2sfgQYt5C-=w1280"
-  ]},
+  { type: "C", text: "題目：怎麼比較？", images: [
+    "https://lh3.googleusercontent.com/sitesv/AICyYdayUcnbt66QZKxAEk3NfmnmKJ71ALVHy6oYpUFrM2KZAm_uTvABEgJkLZh4ZqRboo9ZV4bVGBueab6K4YCaaaf7dm67uzATf4XMseK7kSZmXFfs85np7-ax6fDzPrb228SpEyqNJ0OX17FhcHKDf2CQv_Q8wFzhEbLQ0o1UtSTA0YQKfv3RRKS4y33TuWsg7TyhrfmeyUqwYjcTYm9W6XsNIyJw-d6KliW8=w1280",
+    "https://lh3.googleusercontent.com/sitesv/AICyYdaxtDdV750b2q9-g1xgDzIzuc39eLmKHP1Uz9NE_AqZXK6rMH9Hf-F92NPqKJEMhtFE5zDb0t8aCNVIKs-5oK23Qp8aKavEAu4N7kUAmD_NmDVldLTTuAY7pCuGzTIEyw_OKeWW98DVPE-7Rpi6Yu0eMY0VNrgj1jRC8bTG0QPxHmtxv-plQO2APjj7WdJJ0OnwuhF5_HGbe3CJ_S1oHGrwAQ2sfgQYt5C-=w1280"
+  ]},
 
-  { type: "C", text: "題目：怎麼比較？", images: [
-    "https://lh3.googleusercontent.com/sitesv/AICyYdZM9wE_lxsNcZArsp3TIUo5WP2LAeq88Sx17rk6wC3JPChHvM3X3kBc3Zk5iO9LpeDvGrfSzZeY2Zs1OARpXE4c4EdWIdY7ekVjQYMBmUSfZne0A4FclzWWh9JznKJi9nUieBF-wjOi_bE4sVQ-Qmz3rYxBBhoIhIM2fJ--C7AJIiY9OzIuGa8nTGVH0DKEaRBPb2S95A95SJIxb43ZsE6jKYzQ03GZ8MISi9Y=w1280",
-    "https://lh3.googleusercontent.com/sitesv/AICyYdYHBnQVxuijoTaoAqJIt656mevt_reDa2Gae4_Z2oTEJYPUOyt2gVC8GRC6mUxCxh4gqa9xo0_9T3NrqeD8kG186HUjL5BlMzMaUYUz2ZoEo3AQZUDgKeC4tnA8tAjtAByCpavzFvaMRFwWbeJsrZ7y7uuDOcqtCcg_m3oAHceQ4WN3w0mhHA7cLCwFKcABfVYLjtZ05YpJhn26Tj7m8RNs3TVOyChOcfO8kFE=w1280"
-  ]}
+  { type: "C", text: "題目：怎麼比較？", images: [
+    "https://lh3.googleusercontent.com/sitesv/AICyYdZM9wE_lxsNcZArsp3TIUo5WP2LAeq88Sx17rk6wC3JPChHvM3X3kBc3Zk5iO9LpeDvGrfSzZeY2Zs1OARpXE4c4EdWIdY7ekVjQYMBmUSfZne0A4FclzWWh9JznKJi9nUieBF-wjOi_bE4sVQ-Qmz3rYxBBhoIhIM2fJ--C7AJIiY9OzIuGa8nTGVH0DKEaRBPb2S95A95SJIxb43ZsE6jKYzQ03GZ8MISi9Y=w1280",
+    "https://lh3.googleusercontent.com/sitesv/AICyYdYHBnQVxuijoTaoAqJIt656mevt_reDa2Gae4_Z2oTEJYPUOyt2gVC8GRC6mUxCxh4gqa9xo0_9T3NrqeD8kG186HUjL5BlMzMaUYUz2ZoEo3AQZUDgKeC4tnA8tAjtAByCpavzFvaMRFwWbeJsrZ7y7uuDOcqtCcg_m3oAHceQ4WN3w0mhHA7cLCwFKcABfVYLjtZ05YpJhn26Tj7m8RNs3TVOyChOcfO8kFE=w1280"
+  ]}
 ];
 
 let remaining = [...questionPool];
@@ -216,71 +218,71 @@ img.onclick = handleImageClick;
 
 // === 抽題函式 ===
 function startMarquee() {
-  if (remaining.length === 0) {
-    marquee.textContent = "所有題目都抽完啦！";
-    return;
-  }
-  startBtn.style.display = "none";
-  img.style.display = "none";
+  if (remaining.length === 0) {
+    marquee.textContent = "所有題目都抽完啦！";
+    return;
+  }
+  startBtn.style.display = "none";
+  img.style.display = "none";
 
-  let interval = setInterval(() => {
-    const q = remaining[Math.floor(Math.random() * remaining.length)];
-    marquee.textContent = q.text;
-  }, 100);
+  let interval = setInterval(() => {
+    const q = remaining[Math.floor(Math.random() * remaining.length)];
+    marquee.textContent = q.text;
+  }, 100);
 
-  setTimeout(() => {
-    clearInterval(interval);
-    const chosen = getNextQuestion(); // 改：控制前三題的抽出順序
-    currentQ = chosen;
-    setTimeout(() => showImage(chosen), 1000);
-  }, 3000);
+  setTimeout(() => {
+    clearInterval(interval);
+    const chosen = getNextQuestion(); // 改：控制前三題的抽出順序
+    currentQ = chosen;
+    setTimeout(() => showImage(chosen), 1000);
+  }, 3000);
 }
 
 // === 控制前三題必出特定類型 ===
 function getNextQuestion() {
-  drawCount++;
+  drawCount++;
 
-  let filtered;
-  if (drawCount === 1) {
-    filtered = remaining.filter(q => q.type === "A");
-  } else if (drawCount === 2) {
-    filtered = remaining.filter(q => q.type === "B");
-  } else if (drawCount === 3) {
-    filtered = remaining.filter(q => q.type === "C");
-  } else {
-    filtered = remaining;
-  }
+  let filtered;
+  if (drawCount === 1) {
+    filtered = remaining.filter(q => q.type === "A");
+  } else if (drawCount === 2) {
+    filtered = remaining.filter(q => q.type === "B");
+  } else if (drawCount === 3) {
+    filtered = remaining.filter(q => q.type === "C");
+  } else {
+    filtered = remaining;
+  }
 
-  const chosen = filtered[Math.floor(Math.random() * filtered.length)];
-  return chosen;
+  const chosen = filtered[Math.floor(Math.random() * filtered.length)];
+  return chosen;
 }
 
 // === 顯示題目圖片 ===
 function showImage(q) {
-  marquee.textContent = q.text;
-  img.src = q.images[0];
-  img.style.display = "block";
-  currentImgIndex = 0;
+  marquee.textContent = q.text;
+  img.src = q.images[0];
+  img.style.display = "block";
+  currentImgIndex = 0;
 }
 
 // === 點擊圖片進行切換或重置 ===
 function handleImageClick() {
-  if (!currentQ) return;
-  currentImgIndex++;
-  if (currentImgIndex < currentQ.images.length) {
-    img.src = currentQ.images[currentImgIndex];
-  } else {
-    resetAfterQuestion();
-  }
+  if (!currentQ) return;
+  currentImgIndex++;
+  if (currentImgIndex < currentQ.images.length) {
+    img.src = currentQ.images[currentImgIndex];
+  } else {
+    resetAfterQuestion();
+  }
 }
 
 // === 題目完成後重置 ===
 function resetAfterQuestion() {
-  remaining = remaining.filter(q => q !== currentQ);
-  currentQ = null;
-  img.style.display = "none";
-  marquee.textContent = "點擊「開始抽題」";
-  startBtn.style.display = "block";
+  remaining = remaining.filter(q => q !== currentQ);
+  currentQ = null;
+  img.style.display = "none";
+  marquee.textContent = "點擊「開始抽題」";
+  startBtn.style.display = "block";
 }
 </script>
 
