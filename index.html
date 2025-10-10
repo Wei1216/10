@@ -5,12 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>單元十-面的大小比較</title>
 <style>
+
+@font-face {
+  font-family: 'BpmfGenSenRounded'; /* 給字體一個自訂名稱 */
+  /* 請確認這個路徑是正確的 */
+  src: url('BpmfGenSenRounded.ttf') format('truetype'); 
+  font-weight: normal;
+  font-style: normal;
+}
+  
   body {
-    margin: 0;
-    font-family: "Microsoft JhengHei", sans-serif;
-    display: flex;
-    height: 100vh;
-    background: #f8f8f8;
+  margin: 0;
+  /* 確保第一個字體名稱與 @font-face 中的 family 名稱一致 */
+  font-family: "BpmfGenSenRounded", "Microsoft JhengHei", sans-serif; 
+  display: flex;
+  height: 100vh;
+  background: #f8f8f8;
   }
 
   /* === 左側：選號器 === */
