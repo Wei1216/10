@@ -125,9 +125,9 @@
 
 <!-- 右側：題目區 -->
 <div id="main-area">
-  <div id="marquee">點擊「按」</div>
+  <div id="marquee">按「開始抽題」</div>
   <img id="main-image" src="">
-  <button id="start-btn">按</button>
+  <button id="start-btn">開始抽題</button>
 </div>
 
 <script>
@@ -281,7 +281,7 @@ function resetAfterQuestion() {
   remaining = remaining.filter(q => q !== currentQ);
   currentQ = null;
   img.style.display = "none";
-  marquee.textContent = "點擊「按」";
+  marquee.textContent = "按「開始抽題」";
   startBtn.style.display = "block";
 }
 </script>
