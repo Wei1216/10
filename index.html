@@ -15,12 +15,12 @@
 }
   
   body {
-  margin: 0;
-  /* 確保第一個字體名稱與 @font-face 中的 family 名稱一致 */
-  font-family: "BpmfGenSenRounded-B", "Microsoft JhengHei", sans-serif; 
-  display: flex;
-  height: 100vh;
-  background: #f8f8f8;
+    margin: 0;
+    /* 確保第一個字體名稱與 @font-face 中的 family 名稱一致 */
+    font-family: "BpmfGenSenRounded-B", "Microsoft JhengHei", sans-serif; 
+    display: flex;
+    height: 100vh;
+    background: #f8f8f8;
   }
 
   /* === 左側：選號器 === */
@@ -114,6 +114,15 @@
 </head>
 <body>
 
+<audio id="rollingSound" loop>
+    <source src="rolling.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="chimeSound">
+    <source src="chime.mp3" type="audio/mpeg">
+</audio>
+
+
 <div class="lottery-container">
   <div class="title">選號器</div>
   <div class="number-display"><div class="number" id="numberDisplay">?</div></div>
@@ -133,6 +142,11 @@
 let isRunning = false;
 let animationInterval, progressInterval;
 
+// 取得音效元素
+const rollingSound = document.getElementById('rollingSound');
+const chimeSound = document.getElementById('chimeSound');
+
+
 function getRandomNumber() {
   return Math.floor(Math.random() * 25) + 2; // 2~26
 }
@@ -148,6 +162,12 @@ function startLottery() {
   numberDisplay.className = 'number spinning';
   statusText.textContent = '抽籤中...';
   progressFill.style.width = '0%';
+
+  // 開始播放滾動音效
+  if(rollingSound) {
+    rollingSound.currentTime = 0; 
+    rollingSound.play().catch(e => console.error("滾動音效播放失敗:", e)); 
+  }
 
   let progress = 0;
   const totalTime = 3000;
@@ -165,6 +185,14 @@ function startLottery() {
 
   setTimeout(() => {
     clearInterval(animationInterval);
+
+    // 停止滾動音效並播放結束音效
+    if(rollingSound) rollingSound.pause(); 
+    if(chimeSound) {
+        chimeSound.currentTime = 0;
+        chimeSound.play().catch(e => console.error("結束音效播放失敗:", e));
+    }
+    
     const finalNumber = getRandomNumber();
     numberDisplay.textContent = finalNumber;
     numberDisplay.className = 'number final-result';
@@ -214,7 +242,7 @@ const startBtn = document.getElementById("start-btn");
 startBtn.onclick = startMarquee;
 img.onclick = handleImageClick;
 
-// === 抽題函式 ===
+// === 抽題函式 (包含 1 秒延遲邏輯) ===
 function startMarquee() {
   if (remaining.length === 0) {
     marquee.textContent = "所有題目都抽完啦！";
@@ -230,24 +258,22 @@ function startMarquee() {
     marquee.textContent = q.text;
   }, 100);
 
+  // 第一層 setTimeout: 3秒後停止跑馬燈
   setTimeout(() => {
     clearInterval(interval);
-    const chosen = getNextQuestion(); // 改：控制前三題的抽出順序
+    const chosen = getNextQuestion(); // 確定最終題目
     currentQ = chosen;
-    // 在這裡呼叫 showImage，並傳入 chosen
-// 將跑馬燈內容固定為最終題目文字 (確保在停留期間顯示正確題目)
+
+    // 將跑馬燈內容固定為最終題目文字，準備停留
     marquee.textContent = chosen.text;
 
-    // 第二層 setTimeout: 再等 1 秒後才顯示圖片
-    setTimeout(() => {
-      // 1秒停留結束，顯示圖片並隱藏文字
-      showImage(chosen); 
-    }, 1000); // 這裡設定稍停的 1000 毫秒 (1秒)
+    // 第二層 setTimeout: 再等 1 秒後才顯示圖片並隱藏文字
+    setTimeout(() => {
+      showImage(chosen); 
+    }, 1000); // 1000 毫秒 = 1 秒
 
-  }, 3000);
+  }, 3000);
 }
-
-// ... 後續程式碼不變 ...
 
 // === 控制前三題必出特定類型 ===
 function getNextQuestion() {
@@ -268,12 +294,12 @@ function getNextQuestion() {
   return chosen;
 }
 
-// === 顯示題目圖片 (已修改) ===
+// === 顯示題目圖片 ===
 function showImage(q) {
-  // 步驟 1: 隱藏題目文字
+  // 隱藏題目文字
   marquee.style.display = "none"; 
   
-  // 步驟 2: 顯示圖片
+  // 顯示圖片
   img.src = q.images[0];
   img.style.display = "block";
   currentImgIndex = 0;
@@ -290,13 +316,13 @@ function handleImageClick() {
   }
 }
 
-// === 題目完成後重置 (已修改) ===
+// === 題目完成後重置 ===
 function resetAfterQuestion() {
   remaining = remaining.filter(q => q !== currentQ);
   currentQ = null;
   img.style.display = "none";
   
-  // 步驟 3: 重新顯示題目文字並設定內容
+  // 重新顯示題目文字並設定內容
   marquee.textContent = "按「開始抽題」";
   marquee.style.display = "block"; 
 
