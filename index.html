@@ -19,23 +19,26 @@
     /* 確保第一個字體名稱與 @font-face 中的 family 名稱一致 */
     font-family: "BpmfGenSenRounded-B", "Microsoft JhengHei", sans-serif; 
     display: flex;
-    height: 100vh;
-    background: #f8f8f8;
-  }
+    width: 100vw; 
+    height: 100vh;
+    background: #f8f8f8;
+  }
 
   /* === 左側：選號器 === */
   .lottery-container {
-    flex: 0 0 200px;
-    background: rgba(255, 255, 255, 0.85);
-    border-right: 3px solid #98d0de;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 2px 0 8px rgba(0,0,0,0.1);
-    text-align: center;
-    padding: 20px;
-  }
+    flex: 0 0 200px;
+    background: rgba(255, 255, 255, 0.85);
+    border-right: 3px solid #98d0de;
+    display: flex;
+    flex-direction: column;
+    /* *** 調整：將內容從 center 改為從上方開始排列 (實現視覺縮短) *** */
+    justify-content: flex-start; 
+    align-items: center;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+    text-align: center;
+    /* *** 調整：稍微減少上 padding 以縮短整體佔用空間 *** */
+    padding: 15px 20px; 
+  }
 
   .title { font-size: 20px; font-weight: bold; color: #333; margin-bottom: 10px; }
   .number-display {
@@ -76,6 +79,33 @@
     100% { transform: translateY(20px); opacity: 0.5; }
   }
 
+/* === 新增：O/X 選擇器樣式 (調整大小) === */
+  .ox-selector {
+    width: 150px; /* 寬度與進度條約略相當 */
+    margin-top: 25px; 
+    padding-top: 15px;
+    border-top: 2px dashed #ccc;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 70px; /* 僅比兩個按鈕高度多一點 */
+  }
+  .ox-btn {
+    width: 60px;
+    height: 50px;
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: opacity 0.1s;
+    font-family: "BpmfGenSenRounded-B", "Microsoft JhengHei", sans-serif;
+  }
+  #oxBtnO { background-color: #4CAF50; }
+  #oxBtnX { background-color: #F44336; }
+  .ox-btn:hover { opacity: 0.8; }
+  
   /* === 右側：跑馬燈／圖片顯示區 === */
   #main-area {
     flex: 1;
@@ -84,21 +114,25 @@
     align-items: center;
     flex-direction: column;
     position: relative;
-  }
+  }
   #marquee {
     font-size: 2rem;
     font-weight: bold;
     color: #333;
     text-align: center;
     padding: 20px;
-  }
+    z-index: 1;
+    position: relative; 
+  }
   #main-image {
     max-width: 90%;
     max-height: 85%;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     display: none;
-  }
+    z-index: 1;
+    position: relative; 
+  }
   #start-btn {
     margin-top: 30px;
     padding: 10px 25px;
@@ -110,6 +144,33 @@
     cursor: pointer;
     font-family: "BpmfGenSenRounded-B", "Microsoft JhengHei", sans-serif;
   }
+
+/* === 新增：O/X 圖片覆蓋層 (跑馬燈最上層) === */
+  #ox-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none; /* 預設隱藏 */
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.6); /* 半透明背景 */
+    z-index: 10; /* 確保在最上層 */
+    pointer-events: none; /* 允許點擊穿透到下面的元素 */
+  }
+  .ox-img {
+    font-size: 15vw; /* 讓 O/X 符號非常大 */
+    font-weight: bold;
+    opacity: 0;
+    animation: fade-and-scale 1.5s ease-out forwards;
+  }
+  @keyframes fade-and-scale {
+    0% { transform: scale(0.5); opacity: 0; }
+    50% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(1); opacity: 0; }
+  }
+  
 </style>
 </head>
 <body>
@@ -137,6 +198,29 @@
   <button id="start-btn">開始抽題</button>
 </div>
 
+  <audio id="correctSound">
+    <source src="correct.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="wrongSound">
+    <source src="wrong.mp3" type="audio/mpeg">
+</audio>
+
+
+<div class="lottery-container">
+    <button class="lottery-btn" id="lotteryBtn">抽號碼</button>
+  
+    <div class="ox-selector">
+    <button class="ox-btn" id="oxBtnO">O</button>
+    <button class="ox-btn" id="oxBtnX">X</button>
+  </div>
+</div>
+
+<div id="main-area">
+    <div id="ox-overlay">
+      </div>
+  </div>
+
 <script>
 /* ====== 選號器控制（獨立運作） ====== */
 let isRunning = false;
@@ -145,6 +229,8 @@ let animationInterval, progressInterval;
 // 取得音效元素
 const rollingSound = document.getElementById('rollingSound');
 const chimeSound = document.getElementById('chimeSound');
+const correctSound = document.getElementById('correctSound'); 
+const wrongSound = document.getElementById('wrongSound');  
 
 
 function getRandomNumber() {
@@ -162,6 +248,7 @@ function startLottery() {
   numberDisplay.className = 'number spinning';
   statusText.textContent = '抽籤中...';
   progressFill.style.width = '0%';
+  document.getElementById("lotteryBtn").onclick = startLottery;
 
   // 開始播放滾動音效
   if(rollingSound) {
@@ -204,6 +291,42 @@ function startLottery() {
 
 document.getElementById("lotteryBtn").onclick = startLottery;
 
+/* ====== 新增：O/X 選擇器邏輯 ====== */
+const oxOverlay = document.getElementById('ox-overlay');
+
+function handleOxClick(type) {
+    // 決定圖片內容和音效
+    let content, soundElement;
+    if (type === 'O') {
+        // 使用 Unicode 勾號作為 O 的圖片替代，並加上綠色
+        content = `<div class="ox-img" style="color: #4CAF50;">&#10004;</div>`; 
+        soundElement = correctSound;
+    } else { // X
+        // 使用 Unicode 叉號作為 X 的圖片替代，並加上紅色
+        content = `<div class="ox-img" style="color: #F44336;">&#10008;</div>`; 
+        soundElement = wrongSound;
+    }
+
+    // 1. 顯示 O/X 圖片 (在跑馬燈最上層)
+    oxOverlay.innerHTML = content;
+    oxOverlay.style.display = 'flex';
+    
+    // 2. 播放音效
+    if (soundElement) {
+        soundElement.currentTime = 0;
+        soundElement.play().catch(e => console.error(`播放 ${type} 音效失敗:`, e));
+    }
+
+    // 3. 圖片和音效播放完畢後，隱藏覆蓋層 (與 CSS 動畫時間同步)
+    setTimeout(() => {
+        oxOverlay.style.display = 'none';
+        oxOverlay.innerHTML = ''; // 清空內容
+    }, 1500); // 1.5 秒與 CSS 動畫時間保持一致
+}
+
+document.getElementById("oxBtnO").onclick = () => handleOxClick('O');
+document.getElementById("oxBtnX").onclick = () => handleOxClick('X');
+  
 /* ====== 抽題邏輯 ====== */
 const questionPool = [
   { type: "A", text: "題目：有平面嗎？", images: ["15.png"] },
