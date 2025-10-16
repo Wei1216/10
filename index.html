@@ -6,185 +6,187 @@
 <title>單元十-面的大小比較</title>
 <style>
 @font-face {
-  font-family: 'BpmfGenSenRounded-B';
-  src: url('BpmfGenSenRounded-B.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
+  font-family: 'BpmfGenSenRounded-B';
+  src: url('BpmfGenSenRounded-B.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }
 body {
-  margin: 0;
-  font-family: "BpmfGenSenRounded-B", "Microsoft JhengHei", sans-serif;
-  display: flex;
-  height: 100vh;
-  background: #f8f8f8;
+  margin: 0;
+  font-family: "BpmfGenSenRounded-B", "Microsoft JhengHei", sans-serif;
+  display: flex;
+  height: 100vh;
+  background: #f8f8f8;
 }
 
-/* === 左側：選號器 - 寬度 200px，內容緊湊化 === */
+/* === 左側：選號器 === */
 .lottery-container {
-  flex: 0 0 200px; /* **寬度設定為 200px** */
-  background: rgba(255, 255, 255, 0.85);
-  border-right: 3px solid #98d0de;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start; /* 內容靠上 */
-  align-items: center;
-  box-shadow: 2px 0 8px rgba(0,0,0,0.1);
-  text-align: center;
-  padding: 5px 10px; /* **減少 padding 使其緊湊** */
+  flex: 0 0 280px; /* ✅ 寬度拉長 */
+  background: rgba(255, 255, 255, 0.85);
+  border-right: 3px solid #98d0de;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+  text-align: center;
+  padding: 20px;
 }
-.title { font-size: 20px; font-weight: bold; color: #333; margin-top: 5px; margin-bottom: 5px; } /* 調整 margin */
+.title { font-size: 20px; font-weight: bold; color: #333; margin-bottom: 10px; }
 .number-display {
-  width: 70px; 
-  height: 40px; /* 縮小高度 */
-  border: 3px solid #98d0de;
-  border-radius: 8px;
-  display: flex; justify-content: center; align-items: center;
-  background: linear-gradient(45deg, #f8f9ff, #e8ecff);
+  width: 90px; height: 60px;
+  border: 3px solid #98d0de;
+  border-radius: 8px;
+  display: flex; justify-content: center; align-items: center;
+  background: linear-gradient(45deg, #f8f9ff, #e8ecff);
 }
-.number { font-size: 24px; font-weight: bold; color: #98d0de; } /* 調整字體大小 */
+.number { font-size: 28px; font-weight: bold; color: #98d0de; }
 .progress-bar {
-  width: 100px; /* 調整寬度 */
-  height: 4px; /* 縮小高度 */
-  background: #eee; border-radius: 3px;
-  margin: 5px auto; overflow: hidden;
+  width: 150px; height: 6px;
+  background: #eee; border-radius: 3px;
+  margin: 10px auto; overflow: hidden;
 }
 .progress-fill {
-  height: 100%;
-  background: linear-gradient(45deg, #98d0de, #7bc4d4);
-  width: 0%;
-  transition: width 0.1s linear;
+  height: 100%;
+  background: linear-gradient(45deg, #98d0de, #7bc4d4);
+  width: 0%;
+  transition: width 0.1s linear;
 }
-.status-text { font-size: 13px; color: #666; margin-top: 2px; } /* 調整 margin */
+.status-text { font-size: 13px; color: #666; margin-top: 5px; }
 .lottery-btn {
-  margin-top: 8px; /* 調整 margin */
-  padding: 4px 12px; /* 縮小按鈕 */
-  background: linear-gradient(45deg, #98d0de, #7bc4d4);
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-family: "BpmfGenSenRounded-B", "Microsoft JhengHei", sans-serif;
+  margin-top: 15px;
+  padding: 8px 20px;
+  background: linear-gradient(45deg, #98d0de, #7bc4d4);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: "BpmfGenSenRounded-B", "Microsoft JhengHei", sans-serif;
 }
 
 /* 圈叉按鈕區 */
 .choice-buttons {
-  display: flex;
-  gap: 5px; /* 減少間距 */
-  margin-top: auto; /* 固定在底部 */
-  margin-bottom: 5px; /* 減少底部空間 */
+  display: flex;
+  gap: 10px;
+  margin-top: auto; /* ✅ 固定在底部 */
+  margin-bottom: 10px;
 }
 .choice-btn {
-  font-size: 20px; /* 縮小字體 */
-  width: 40px; /* 縮小按鈕 */
-  height: 40px; /* 縮小按鈕 */
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  background: #fff;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-  transition: transform 0.2s;
+  font-size: 24px;
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  transition: transform 0.2s;
 }
 .choice-btn:hover {
-  transform: scale(1.1);
+  transform: scale(1.1);
 }
 .choice-btn.circle { color: #4CAF50; }
 .choice-btn.cross { color: #F44336; }
 
 .spinning { animation: spin 0.1s linear infinite; }
 @keyframes spin {
-  0% { transform: translateY(-20px); opacity: 0.5; }
-  50% { transform: translateY(0); opacity: 1; }
-  100% { transform: translateY(20px); opacity: 0.5; }
+  0% { transform: translateY(-20px); opacity: 0.5; }
+  50% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(20px); opacity: 0.5; }
 }
 
 /* === 右側：跑馬燈／圖片顯示區 === */
 #main-area {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  position: relative;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
 }
 #marquee {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #333;
-  text-align: center;
-  padding: 20px;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  padding: 20px;
 }
 #main-image {
-  max-width: 90%;
-  max-height: 85%;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  display: none;
+  max-width: 90%;
+  max-height: 85%;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  display: none;
 }
 #start-btn {
-  margin-top: 30px;
-  padding: 10px 25px;
-  font-size: 1.2rem;
-  background: linear-gradient(45deg, #98d0de, #7bc4d4);
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-family: "BpmfGenSenRounded-B", "Microsoft JhengHei", sans-serif;
+  margin-top: 30px;
+  padding: 10px 25px;
+  font-size: 1.2rem;
+  background: linear-gradient(45deg, #98d0de, #7bc4d4);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: "BpmfGenSenRounded-B", "Microsoft JhengHei", sans-serif;
 }
 
 /* 顯示符號動畫 */
 .symbol-display {
-  position: absolute;
-  font-size: 8rem;
-  opacity: 0;
-  transition: opacity 0.3s, transform 0.3s;
+  position: absolute;
+  font-size: 8rem;
+  opacity: 0;
+  transition: opacity 0.3s, transform 0.3s;
 }
 .symbol-display.show {
-  opacity: 1;
-  transform: scale(1.2);
+  opacity: 1;
+  transform: scale(1.2);
 }
 </style>
 </head>
 <body>
 
+<!-- 音效 -->
 <audio id="rollingSound" loop>
-  <source src="rolling.mp3" type="audio/mpeg">
+  <source src="rolling.mp3" type="audio/mpeg">
 </audio>
 <audio id="chimeSound">
-  <source src="chime.mp3" type="audio/mpeg">
+  <source src="chime.mp3" type="audio/mpeg">
 </audio>
 <audio id="correctSound">
-  <source src="correct.mp3" type="audio/mpeg">
+  <source src="correct.mp3" type="audio/mpeg">
 </audio>
 <audio id="wrongSound">
-  <source src="wrong.mp3" type="audio/mpeg">
+  <source src="wrong.mp3" type="audio/mpeg">
 </audio>
 
+<!-- 左側選號器 -->
 <div class="lottery-container">
-  <div class="title">選號器</div>
-  <div class="number-display"><div class="number" id="numberDisplay">?</div></div>
-  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-  <div class="status-text" id="statusText">等待啟動</div>
-  <button class="lottery-btn" id="lotteryBtn">抽號碼</button>
+  <div class="title">選號器</div>
+  <div class="number-display"><div class="number" id="numberDisplay">?</div></div>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="status-text" id="statusText">等待啟動</div>
+  <button class="lottery-btn" id="lotteryBtn">抽號碼</button>
 
-    <div class="choice-buttons">
-    <button class="choice-btn circle" id="circleBtn">⭕</button>
-    <button class="choice-btn cross" id="crossBtn">❌</button>
-  </div>
+  <!-- 圈叉按鈕 -->
+  <div class="choice-buttons">
+    <button class="choice-btn circle" id="circleBtn">⭕</button>
+    <button class="choice-btn cross" id="crossBtn">❌</button>
+  </div>
 </div>
 
+<!-- 右側主要畫面 -->
 <div id="main-area">
-  <div id="marquee">按「開始抽題」</div>
-  <img id="main-image" src="">
-  <div class="symbol-display" id="symbolDisplay"></div>
-  <button id="start-btn">開始抽題</button>
+  <div id="marquee">按「開始抽題」</div>
+  <img id="main-image" src="">
+  <div class="symbol-display" id="symbolDisplay"></div>
+  <button id="start-btn">開始抽題</button>
 </div>
 
 <script>
 /* ====== 選號器控制 ====== */
 let isRunning = false;
 let animationInterval, progressInterval;
-let canDraw = true;
+let canDraw = true; // ✅ 控制能否抽題
 
 const rollingSound = document.getElementById('rollingSound');
 const chimeSound = document.getElementById('chimeSound');
@@ -192,62 +194,62 @@ const correctSound = document.getElementById('correctSound');
 const wrongSound = document.getElementById('wrongSound');
 
 function getRandomNumber() {
-  return Math.floor(Math.random() * 25) + 2;
+  return Math.floor(Math.random() * 25) + 2;
 }
 
 function startLottery() {
-  if (isRunning) return;
-  isRunning = true;
+  if (isRunning) return;
+  isRunning = true;
 
-  const numberDisplay = document.getElementById('numberDisplay');
-  const statusText = document.getElementById('statusText');
-  const progressFill = document.getElementById('progressFill');
+  const numberDisplay = document.getElementById('numberDisplay');
+  const statusText = document.getElementById('statusText');
+  const progressFill = document.getElementById('progressFill');
 
-  numberDisplay.className = 'number spinning';
-  statusText.textContent = '抽籤中...';
-  progressFill.style.width = '0%';
-  if (rollingSound) { rollingSound.currentTime = 0; rollingSound.play().catch(()=>{}); }
+  numberDisplay.className = 'number spinning';
+  statusText.textContent = '抽籤中...';
+  progressFill.style.width = '0%';
+  if (rollingSound) { rollingSound.currentTime = 0; rollingSound.play().catch(()=>{}); }
 
-  let progress = 0;
-  const totalTime = 2000;
-  const updateInterval = 50;
+  let progress = 0;
+  const totalTime = 2000;
+  const updateInterval = 50;
 
-  animationInterval = setInterval(() => {
-    numberDisplay.textContent = getRandomNumber();
-  }, 100);
+  animationInterval = setInterval(() => {
+    numberDisplay.textContent = getRandomNumber();
+  }, 100);
 
-  progressInterval = setInterval(() => {
-    progress += updateInterval;
-    progressFill.style.width = (progress / totalTime) * 100 + '%';
-    if (progress >= totalTime) clearInterval(progressInterval);
-  }, updateInterval);
+  progressInterval = setInterval(() => {
+    progress += updateInterval;
+    progressFill.style.width = (progress / totalTime) * 100 + '%';
+    if (progress >= totalTime) clearInterval(progressInterval);
+  }, updateInterval);
 
-  setTimeout(() => {
-    clearInterval(animationInterval);
-    if (rollingSound) rollingSound.pause();
-    if (chimeSound) { chimeSound.currentTime = 0; chimeSound.play().catch(()=>{}); }
-    const finalNumber = getRandomNumber();
-    numberDisplay.textContent = finalNumber;
-    numberDisplay.className = 'number final-result';
-    statusText.textContent = `🎉 抽中號碼：${finalNumber}`;
-    progressFill.style.width = '100%';
-    isRunning = false;
-  }, totalTime);
+  setTimeout(() => {
+    clearInterval(animationInterval);
+    if (rollingSound) rollingSound.pause();
+    if (chimeSound) { chimeSound.currentTime = 0; chimeSound.play().catch(()=>{}); }
+    const finalNumber = getRandomNumber();
+    numberDisplay.textContent = finalNumber;
+    numberDisplay.className = 'number final-result';
+    statusText.textContent = `🎉 抽中號碼：${finalNumber}`;
+    progressFill.style.width = '100%';
+    isRunning = false;
+  }, totalTime);
 }
 
 document.getElementById("lotteryBtn").onclick = startLottery;
 
 /* ====== 抽題邏輯 ====== */
 const questionPool = [
-  { type: "A", text: "題目：有平面嗎？", images: ["15.png"] },
-  { type: "A", text: "題目：有平面嗎？", images: ["19.png"] },
-  { type: "A", text: "題目：有平面嗎？", images: ["23.png"] },
-  { type: "B", text: "題目：哪個面比較大？", images: ["16.png"] },
-  { type: "B", text: "題目：哪個面比較大？", images: ["20.png"] },
-  { type: "B", text: "題目：哪個面比較大？", images: ["24.png"] },
-  { type: "C", text: "題目：怎麼比較？", images: ["17.png","18.png"] },
-  { type: "C", text: "題目：怎麼比較？", images: ["21.png","22.png"] },
-  { type: "C", text: "題目：怎麼比較？", images: ["25.png","26.png"] }
+  { type: "A", text: "題目：有平面嗎？", images: ["15.png"] },
+  { type: "A", text: "題目：有平面嗎？", images: ["19.png"] },
+  { type: "A", text: "題目：有平面嗎？", images: ["23.png"] },
+  { type: "B", text: "題目：哪個面比較大？", images: ["16.png"] },
+  { type: "B", text: "題目：哪個面比較大？", images: ["20.png"] },
+  { type: "B", text: "題目：哪個面比較大？", images: ["24.png"] },
+  { type: "C", text: "題目：怎麼比較？", images: ["17.png","18.png"] },
+  { type: "C", text: "題目：怎麼比較？", images: ["21.png","22.png"] },
+  { type: "C", text: "題目：怎麼比較？", images: ["25.png","26.png"] }
 ];
 
 let remaining = [...questionPool];
@@ -264,66 +266,66 @@ startBtn.onclick = startMarquee;
 img.onclick = handleImageClick;
 
 function startMarquee() {
-  if (!canDraw) return;
-  if (remaining.length === 0) {
-    marquee.textContent = "所有題目都抽完啦！";
-    return;
-  }
-  startBtn.style.display = "none";
-  img.style.display = "none";
-  marquee.style.display = "block";  
+  if (!canDraw) return; // ✅ 防止圈叉期間抽題
+  if (remaining.length === 0) {
+    marquee.textContent = "所有題目都抽完啦！";
+    return;
+  }
+  startBtn.style.display = "none";
+  img.style.display = "none";
+  marquee.style.display = "block";  
 
-  let interval = setInterval(() => {
-    const q = remaining[Math.floor(Math.random() * remaining.length)];
-    marquee.textContent = q.text;
-  }, 100);
+  let interval = setInterval(() => {
+    const q = remaining[Math.floor(Math.random() * remaining.length)];
+    marquee.textContent = q.text;
+  }, 100);
 
-  setTimeout(() => {
-    clearInterval(interval);
-    const chosen = getNextQuestion();
-    currentQ = chosen;
-    marquee.textContent = chosen.text;
+  setTimeout(() => {
+    clearInterval(interval);
+    const chosen = getNextQuestion();
+    currentQ = chosen;
+    marquee.textContent = chosen.text;
 
-    setTimeout(() => {
-      showImage(chosen); 
-    }, 1000);
-  }, 3000);
+    setTimeout(() => {
+      showImage(chosen); 
+    }, 1000);
+  }, 3000);
 }
 
 function getNextQuestion() {
-  drawCount++;
-  let filtered;
-  if (drawCount === 1) filtered = remaining.filter(q => q.type === "A");
-  else if (drawCount === 2) filtered = remaining.filter(q => q.type === "B");
-  else if (drawCount === 3) filtered = remaining.filter(q => q.type === "C");
-  else filtered = remaining;
-  return filtered[Math.floor(Math.random() * filtered.length)];
+  drawCount++;
+  let filtered;
+  if (drawCount === 1) filtered = remaining.filter(q => q.type === "A");
+  else if (drawCount === 2) filtered = remaining.filter(q => q.type === "B");
+  else if (drawCount === 3) filtered = remaining.filter(q => q.type === "C");
+  else filtered = remaining;
+  return filtered[Math.floor(Math.random() * filtered.length)];
 }
 
 function showImage(q) {
-  marquee.style.display = "none";  
-  img.src = q.images[0];
-  img.style.display = "block";
-  currentImgIndex = 0;
+  marquee.style.display = "none";  
+  img.src = q.images[0];
+  img.style.display = "block";
+  currentImgIndex = 0;
 }
 
 function handleImageClick() {
-  if (!currentQ) return;
-  currentImgIndex++;
-  if (currentImgIndex < currentQ.images.length) {
-    img.src = currentQ.images[currentImgIndex];
-  } else {
-    resetAfterQuestion();
-  }
+  if (!currentQ) return;
+  currentImgIndex++;
+  if (currentImgIndex < currentQ.images.length) {
+    img.src = currentQ.images[currentImgIndex];
+  } else {
+    resetAfterQuestion();
+  }
 }
 
 function resetAfterQuestion() {
-  remaining = remaining.filter(q => q !== currentQ);
-  currentQ = null;
-  img.style.display = "none";
-  marquee.textContent = "按「開始抽題」";
-  marquee.style.display = "block";  
-  startBtn.style.display = "block";
+  remaining = remaining.filter(q => q !== currentQ);
+  currentQ = null;
+  img.style.display = "none";
+  marquee.textContent = "按「開始抽題」";
+  marquee.style.display = "block";  
+  startBtn.style.display = "block";
 }
 
 /* ====== 圈叉按鈕行為 ====== */
@@ -331,18 +333,18 @@ document.getElementById("circleBtn").onclick = () => showSymbol("⭕", correctSo
 document.getElementById("crossBtn").onclick = () => showSymbol("❌", wrongSound);
 
 function showSymbol(symbol, sound) {
-  if (!canDraw) return;
-  canDraw = false;
-  img.style.display = "none";
-  marquee.style.display = "none";
-  symbolDisplay.textContent = symbol;
-  symbolDisplay.classList.add("show");
-  if (sound) { sound.currentTime = 0; sound.play().catch(()=>{}); }
-  setTimeout(() => {
-    symbolDisplay.classList.remove("show");
-    symbolDisplay.textContent = "";
-    canDraw = true;
-  }, 2000);
+  if (!canDraw) return;
+  canDraw = false; // ✅ 暫時鎖定
+  img.style.display = "none";
+  marquee.style.display = "none";
+  symbolDisplay.textContent = symbol;
+  symbolDisplay.classList.add("show");
+  if (sound) { sound.currentTime = 0; sound.play().catch(()=>{}); }
+  setTimeout(() => {
+    symbolDisplay.classList.remove("show");
+    symbolDisplay.textContent = "";
+    canDraw = true; // ✅ 恢復可抽題
+  }, 2000);
 }
 </script>
 </body>
