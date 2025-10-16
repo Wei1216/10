@@ -66,7 +66,7 @@
     border: none;
     border-radius: 6px;
     cursor: pointer;
-    font-family: "BpmfGenSenRounded", "Microsoft JhengHei", sans-serif;
+    font-family: "BpmfGenSenRounded-B", "Microsoft JhengHei", sans-serif;
   }
 
   .spinning { animation: spin 0.1s linear infinite; }
@@ -108,13 +108,12 @@
     border: none;
     border-radius: 6px;
     cursor: pointer;
-    font-family: "BpmfGenSenRounded", "Microsoft JhengHei", sans-serif;
+    font-family: "BpmfGenSenRounded-B", "Microsoft JhengHei", sans-serif;
   }
 </style>
 </head>
 <body>
 
-<!-- 左側：選號器 -->
 <div class="lottery-container">
   <div class="title">選號器</div>
   <div class="number-display"><div class="number" id="numberDisplay">?</div></div>
@@ -123,7 +122,6 @@
   <button class="lottery-btn" id="lotteryBtn">抽號碼</button>
 </div>
 
-<!-- 右側：題目區 -->
 <div id="main-area">
   <div id="marquee">按「開始抽題」</div>
   <img id="main-image" src="">
@@ -224,6 +222,8 @@ function startMarquee() {
   }
   startBtn.style.display = "none";
   img.style.display = "none";
+  // 圖片跳出前，確保文字是顯示的
+  marquee.style.display = "block"; 
 
   let interval = setInterval(() => {
     const q = remaining[Math.floor(Math.random() * remaining.length)];
@@ -234,7 +234,8 @@ function startMarquee() {
     clearInterval(interval);
     const chosen = getNextQuestion(); // 改：控制前三題的抽出順序
     currentQ = chosen;
-    setTimeout(() => showImage(chosen), 1000);
+    // 在這裡呼叫 showImage，並傳入 chosen
+    showImage(chosen); 
   }, 3000);
 }
 
@@ -257,9 +258,12 @@ function getNextQuestion() {
   return chosen;
 }
 
-// === 顯示題目圖片 ===
+// === 顯示題目圖片 (已修改) ===
 function showImage(q) {
-  marquee.textContent = q.text;
+  // 步驟 1: 隱藏題目文字
+  marquee.style.display = "none"; 
+  
+  // 步驟 2: 顯示圖片
   img.src = q.images[0];
   img.style.display = "block";
   currentImgIndex = 0;
@@ -276,12 +280,16 @@ function handleImageClick() {
   }
 }
 
-// === 題目完成後重置 ===
+// === 題目完成後重置 (已修改) ===
 function resetAfterQuestion() {
   remaining = remaining.filter(q => q !== currentQ);
   currentQ = null;
   img.style.display = "none";
+  
+  // 步驟 3: 重新顯示題目文字並設定內容
   marquee.textContent = "按「開始抽題」";
+  marquee.style.display = "block"; 
+
   startBtn.style.display = "block";
 }
 </script>
