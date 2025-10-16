@@ -8,6 +8,8 @@
 @font-face {
   font-family: 'BpmfGenSenRounded-B';
   src: url('BpmfGenSenRounded-B.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }
 body {
   margin: 0;
@@ -17,9 +19,9 @@ body {
   background: #f8f8f8;
 }
 
-/* 左側選號器 */
+/* === 左側：選號器 === */
 .lottery-container {
-  flex: 0 0 220px;
+  flex: 0 0 200px;
   background: rgba(255, 255, 255, 0.85);
   border-right: 3px solid #98d0de;
   display: flex;
@@ -59,26 +61,40 @@ body {
   border: none;
   border-radius: 6px;
   cursor: pointer;
+  font-family: "BpmfGenSenRounded-B", "Microsoft JhengHei", sans-serif;
 }
 
 /* 圈叉按鈕區 */
-.choice-area {
-  margin-top: 30px;
+.choice-buttons {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
 }
 .choice-btn {
-  font-size: 3rem;
+  font-size: 24px;
+  width: 50px;
+  height: 50px;
   border: none;
-  background: none;
+  border-radius: 50%;
   cursor: pointer;
-  margin: 0 20px;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
   transition: transform 0.2s;
 }
-.choice-btn:hover { transform: scale(1.2); }
+.choice-btn:hover {
+  transform: scale(1.1);
+}
+.choice-btn.circle { color: #4CAF50; }
+.choice-btn.cross { color: #F44336; }
 
-/* 右側主要顯示區 */
+.spinning { animation: spin 0.1s linear infinite; }
+@keyframes spin {
+  0% { transform: translateY(-20px); opacity: 0.5; }
+  50% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(20px); opacity: 0.5; }
+}
+
+/* === 右側：跑馬燈／圖片顯示區 === */
 #main-area {
   flex: 1;
   display: flex;
@@ -110,29 +126,37 @@ body {
   border: none;
   border-radius: 6px;
   cursor: pointer;
+  font-family: "BpmfGenSenRounded-B", "Microsoft JhengHei", sans-serif;
 }
-#symbol-display {
-  font-size: 6rem;
-  margin-top: 20px;
+
+/* 顯示符號動畫 */
+.symbol-display {
+  position: absolute;
+  font-size: 8rem;
   opacity: 0;
-  transform: scale(0.5);
-  transition: transform 0.6s ease, opacity 0.6s ease;
+  transition: opacity 0.3s, transform 0.3s;
 }
-#symbol-display.show {
+.symbol-display.show {
   opacity: 1;
-  transform: scale(1.5);
+  transform: scale(1.2);
 }
 </style>
 </head>
 <body>
 
-<!-- 音效 -->
-<audio id="rollingSound" loop><source src="rolling.mp3" type="audio/mpeg"></audio>
-<audio id="chimeSound"><source src="chime.mp3" type="audio/mpeg"></audio>
-<audio id="correctSound"><source src="correct.mp3" type="audio/mpeg"></audio>
-<audio id="wrongSound"><source src="wrong.mp3" type="audio/mpeg"></audio>
+<audio id="rollingSound" loop>
+  <source src="rolling.mp3" type="audio/mpeg">
+</audio>
+<audio id="chimeSound">
+  <source src="chime.mp3" type="audio/mpeg">
+</audio>
+<audio id="correctSound">
+  <source src="correct.mp3" type="audio/mpeg">
+</audio>
+<audio id="wrongSound">
+  <source src="wrong.mp3" type="audio/mpeg">
+</audio>
 
-<!-- 左側選號器 -->
 <div class="lottery-container">
   <div class="title">選號器</div>
   <div class="number-display"><div class="number" id="numberDisplay">?</div></div>
@@ -140,25 +164,25 @@ body {
   <div class="status-text" id="statusText">等待啟動</div>
   <button class="lottery-btn" id="lotteryBtn">抽號碼</button>
 
-  <!-- ⭕❌選擇區 -->
-  <div class="choice-area" id="choice-area" style="display:none;">
-    <button class="choice-btn" id="circleBtn">⭕</button>
-    <button class="choice-btn" id="crossBtn">❌</button>
+  <!-- 圈叉按鈕 -->
+  <div class="choice-buttons">
+    <button class="choice-btn circle" id="circleBtn">⭕</button>
+    <button class="choice-btn cross" id="crossBtn">❌</button>
   </div>
 </div>
 
-<!-- 右側顯示區 -->
 <div id="main-area">
   <div id="marquee">按「開始抽題」</div>
   <img id="main-image" src="">
+  <div class="symbol-display" id="symbolDisplay"></div>
   <button id="start-btn">開始抽題</button>
-  <div id="symbol-display"></div>
 </div>
 
 <script>
-/* === 選號器 === */
+/* ====== 選號器控制 ====== */
 let isRunning = false;
 let animationInterval, progressInterval;
+
 const rollingSound = document.getElementById('rollingSound');
 const chimeSound = document.getElementById('chimeSound');
 const correctSound = document.getElementById('correctSound');
@@ -167,9 +191,11 @@ const wrongSound = document.getElementById('wrongSound');
 function getRandomNumber() {
   return Math.floor(Math.random() * 25) + 2;
 }
+
 function startLottery() {
   if (isRunning) return;
   isRunning = true;
+
   const numberDisplay = document.getElementById('numberDisplay');
   const statusText = document.getElementById('statusText');
   const progressFill = document.getElementById('progressFill');
@@ -177,24 +203,26 @@ function startLottery() {
   numberDisplay.className = 'number spinning';
   statusText.textContent = '抽籤中...';
   progressFill.style.width = '0%';
-  rollingSound.currentTime = 0;
-  rollingSound.play().catch(()=>{});
+  if (rollingSound) { rollingSound.currentTime = 0; rollingSound.play().catch(()=>{}); }
 
   let progress = 0;
   const totalTime = 2000;
   const updateInterval = 50;
+
   animationInterval = setInterval(() => {
     numberDisplay.textContent = getRandomNumber();
   }, 100);
+
   progressInterval = setInterval(() => {
     progress += updateInterval;
     progressFill.style.width = (progress / totalTime) * 100 + '%';
+    if (progress >= totalTime) clearInterval(progressInterval);
   }, updateInterval);
+
   setTimeout(() => {
     clearInterval(animationInterval);
-    clearInterval(progressInterval);
-    rollingSound.pause();
-    chimeSound.currentTime = 0; chimeSound.play().catch(()=>{});
+    if (rollingSound) rollingSound.pause();
+    if (chimeSound) { chimeSound.currentTime = 0; chimeSound.play().catch(()=>{}); }
     const finalNumber = getRandomNumber();
     numberDisplay.textContent = finalNumber;
     numberDisplay.className = 'number final-result';
@@ -203,9 +231,10 @@ function startLottery() {
     isRunning = false;
   }, totalTime);
 }
+
 document.getElementById("lotteryBtn").onclick = startLottery;
 
-/* === 抽題邏輯 === */
+/* ====== 抽題邏輯 ====== */
 const questionPool = [
   { type: "A", text: "題目：有平面嗎？", images: ["15.png"] },
   { type: "A", text: "題目：有平面嗎？", images: ["19.png"] },
@@ -213,10 +242,11 @@ const questionPool = [
   { type: "B", text: "題目：哪個面比較大？", images: ["16.png"] },
   { type: "B", text: "題目：哪個面比較大？", images: ["20.png"] },
   { type: "B", text: "題目：哪個面比較大？", images: ["24.png"] },
-  { type: "C", text: "題目：怎麼比較？", images: ["17.png", "18.png"] },
-  { type: "C", text: "題目：怎麼比較？", images: ["21.png", "22.png"] },
-  { type: "C", text: "題目：怎麼比較？", images: ["25.png", "26.png"] }
+  { type: "C", text: "題目：怎麼比較？", images: ["17.png","18.png"] },
+  { type: "C", text: "題目：怎麼比較？", images: ["21.png","22.png"] },
+  { type: "C", text: "題目：怎麼比較？", images: ["25.png","26.png"] }
 ];
+
 let remaining = [...questionPool];
 let drawCount = 0;
 let currentQ = null;
@@ -225,8 +255,7 @@ let currentImgIndex = 0;
 const marquee = document.getElementById("marquee");
 const img = document.getElementById("main-image");
 const startBtn = document.getElementById("start-btn");
-const choiceArea = document.getElementById("choice-area");
-const symbolDisplay = document.getElementById("symbol-display");
+const symbolDisplay = document.getElementById("symbolDisplay");
 
 startBtn.onclick = startMarquee;
 img.onclick = handleImageClick;
@@ -238,22 +267,25 @@ function startMarquee() {
   }
   startBtn.style.display = "none";
   img.style.display = "none";
-  choiceArea.style.display = "none";
-  symbolDisplay.textContent = "";
-  marquee.style.display = "block";
+  marquee.style.display = "block";  
 
   let interval = setInterval(() => {
     const q = remaining[Math.floor(Math.random() * remaining.length)];
     marquee.textContent = q.text;
   }, 100);
+
   setTimeout(() => {
     clearInterval(interval);
     const chosen = getNextQuestion();
     currentQ = chosen;
     marquee.textContent = chosen.text;
-    setTimeout(() => showImage(chosen), 1000);
+
+    setTimeout(() => {
+      showImage(chosen); 
+    }, 1000);
   }, 3000);
 }
+
 function getNextQuestion() {
   drawCount++;
   let filtered;
@@ -263,50 +295,47 @@ function getNextQuestion() {
   else filtered = remaining;
   return filtered[Math.floor(Math.random() * filtered.length)];
 }
+
 function showImage(q) {
-  marquee.style.display = "none";
+  marquee.style.display = "none";  
   img.src = q.images[0];
   img.style.display = "block";
   currentImgIndex = 0;
 }
+
 function handleImageClick() {
   if (!currentQ) return;
   currentImgIndex++;
   if (currentImgIndex < currentQ.images.length) {
     img.src = currentQ.images[currentImgIndex];
   } else {
-    showChoiceButtons();
+    resetAfterQuestion();
   }
 }
 
-/* === 顯示圈叉選擇 === */
-function showChoiceButtons() {
-  img.style.display = "none";
-  choiceArea.style.display = "flex";
-}
-document.getElementById("circleBtn").onclick = () => showSymbol("⭕", "correct");
-document.getElementById("crossBtn").onclick = () => showSymbol("❌", "wrong");
-function showSymbol(symbol, soundType) {
-  choiceArea.style.display = "none";
-  symbolDisplay.textContent = symbol;
-  symbolDisplay.classList.add("show");
-  if (soundType === "correct") { correctSound.currentTime = 0; correctSound.play().catch(()=>{}); }
-  if (soundType === "wrong") { wrongSound.currentTime = 0; wrongSound.play().catch(()=>{}); }
-  setTimeout(() => {
-    symbolDisplay.classList.remove("show");
-    resetAfterQuestion();
-  }, 2000);
-}
-
-/* === 題目結束重置 === */
 function resetAfterQuestion() {
   remaining = remaining.filter(q => q !== currentQ);
   currentQ = null;
   img.style.display = "none";
-  symbolDisplay.textContent = "";
   marquee.textContent = "按「開始抽題」";
-  marquee.style.display = "block";
+  marquee.style.display = "block";  
   startBtn.style.display = "block";
+}
+
+/* ====== 圈叉按鈕行為 ====== */
+document.getElementById("circleBtn").onclick = () => showSymbol("⭕", correctSound);
+document.getElementById("crossBtn").onclick = () => showSymbol("❌", wrongSound);
+
+function showSymbol(symbol, sound) {
+  img.style.display = "none";
+  marquee.style.display = "none";
+  symbolDisplay.textContent = symbol;
+  symbolDisplay.classList.add("show");
+  if (sound) { sound.currentTime = 0; sound.play().catch(()=>{}); }
+  setTimeout(() => {
+    symbolDisplay.classList.remove("show");
+    symbolDisplay.textContent = "";
+  }, 2000);
 }
 </script>
 </body>
