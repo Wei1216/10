@@ -19,12 +19,12 @@ body {
 
 /* 左側選號器 */
 .lottery-container {
-  flex: 0 0 200px;
+  flex: 0 0 220px;
   background: rgba(255, 255, 255, 0.85);
   border-right: 3px solid #98d0de;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   box-shadow: 2px 0 8px rgba(0,0,0,0.1);
   text-align: center;
@@ -61,6 +61,23 @@ body {
   cursor: pointer;
 }
 
+/* 圈叉按鈕區 */
+.choice-area {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.choice-btn {
+  font-size: 3rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  margin: 0 20px;
+  transition: transform 0.2s;
+}
+.choice-btn:hover { transform: scale(1.2); }
+
 /* 右側主要顯示區 */
 #main-area {
   flex: 1;
@@ -94,33 +111,26 @@ body {
   border-radius: 6px;
   cursor: pointer;
 }
-#choice-area {
-  display: none;
-  margin-top: 20px;
-}
-.choice-btn {
-  font-size: 3rem;
-  border: none;
-  background: none;
-  cursor: pointer;
-  margin: 0 20px;
-  transition: transform 0.2s;
-}
-.choice-btn:hover { transform: scale(1.2); }
 #symbol-display {
   font-size: 6rem;
   margin-top: 20px;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: transform 0.6s ease, opacity 0.6s ease;
+}
+#symbol-display.show {
+  opacity: 1;
+  transform: scale(1.5);
 }
 </style>
 </head>
 <body>
 
-<audio id="rollingSound" loop>
-  <source src="rolling.mp3" type="audio/mpeg">
-</audio>
-<audio id="chimeSound">
-  <source src="chime.mp3" type="audio/mpeg">
-</audio>
+<!-- 音效 -->
+<audio id="rollingSound" loop><source src="rolling.mp3" type="audio/mpeg"></audio>
+<audio id="chimeSound"><source src="chime.mp3" type="audio/mpeg"></audio>
+<audio id="correctSound"><source src="correct.mp3" type="audio/mpeg"></audio>
+<audio id="wrongSound"><source src="wrong.mp3" type="audio/mpeg"></audio>
 
 <!-- 左側選號器 -->
 <div class="lottery-container">
@@ -129,6 +139,12 @@ body {
   <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
   <div class="status-text" id="statusText">等待啟動</div>
   <button class="lottery-btn" id="lotteryBtn">抽號碼</button>
+
+  <!-- ⭕❌選擇區 -->
+  <div class="choice-area" id="choice-area" style="display:none;">
+    <button class="choice-btn" id="circleBtn">⭕</button>
+    <button class="choice-btn" id="crossBtn">❌</button>
+  </div>
 </div>
 
 <!-- 右側顯示區 -->
@@ -136,12 +152,6 @@ body {
   <div id="marquee">按「開始抽題」</div>
   <img id="main-image" src="">
   <button id="start-btn">開始抽題</button>
-
-  <!-- 圈叉選擇區 -->
-  <div id="choice-area">
-    <button class="choice-btn" id="circleBtn">⭕</button>
-    <button class="choice-btn" id="crossBtn">❌</button>
-  </div>
   <div id="symbol-display"></div>
 </div>
 
@@ -151,6 +161,8 @@ let isRunning = false;
 let animationInterval, progressInterval;
 const rollingSound = document.getElementById('rollingSound');
 const chimeSound = document.getElementById('chimeSound');
+const correctSound = document.getElementById('correctSound');
+const wrongSound = document.getElementById('wrongSound');
 
 function getRandomNumber() {
   return Math.floor(Math.random() * 25) + 2;
@@ -165,7 +177,8 @@ function startLottery() {
   numberDisplay.className = 'number spinning';
   statusText.textContent = '抽籤中...';
   progressFill.style.width = '0%';
-  if (rollingSound) { rollingSound.currentTime = 0; rollingSound.play().catch(()=>{}); }
+  rollingSound.currentTime = 0;
+  rollingSound.play().catch(()=>{});
 
   let progress = 0;
   const totalTime = 2000;
@@ -176,12 +189,12 @@ function startLottery() {
   progressInterval = setInterval(() => {
     progress += updateInterval;
     progressFill.style.width = (progress / totalTime) * 100 + '%';
-    if (progress >= totalTime) clearInterval(progressInterval);
   }, updateInterval);
   setTimeout(() => {
     clearInterval(animationInterval);
-    if (rollingSound) rollingSound.pause();
-    if (chimeSound) { chimeSound.currentTime = 0; chimeSound.play().catch(()=>{}); }
+    clearInterval(progressInterval);
+    rollingSound.pause();
+    chimeSound.currentTime = 0; chimeSound.play().catch(()=>{});
     const finalNumber = getRandomNumber();
     numberDisplay.textContent = finalNumber;
     numberDisplay.className = 'number final-result';
@@ -214,6 +227,7 @@ const img = document.getElementById("main-image");
 const startBtn = document.getElementById("start-btn");
 const choiceArea = document.getElementById("choice-area");
 const symbolDisplay = document.getElementById("symbol-display");
+
 startBtn.onclick = startMarquee;
 img.onclick = handleImageClick;
 
@@ -237,9 +251,7 @@ function startMarquee() {
     const chosen = getNextQuestion();
     currentQ = chosen;
     marquee.textContent = chosen.text;
-    setTimeout(() => {
-      showImage(chosen);
-    }, 1000);
+    setTimeout(() => showImage(chosen), 1000);
   }, 3000);
 }
 function getNextQuestion() {
@@ -270,14 +282,20 @@ function handleImageClick() {
 /* === 顯示圈叉選擇 === */
 function showChoiceButtons() {
   img.style.display = "none";
-  choiceArea.style.display = "block";
+  choiceArea.style.display = "flex";
 }
-document.getElementById("circleBtn").onclick = () => showSymbol("⭕");
-document.getElementById("crossBtn").onclick = () => showSymbol("❌");
-function showSymbol(symbol) {
+document.getElementById("circleBtn").onclick = () => showSymbol("⭕", "correct");
+document.getElementById("crossBtn").onclick = () => showSymbol("❌", "wrong");
+function showSymbol(symbol, soundType) {
   choiceArea.style.display = "none";
   symbolDisplay.textContent = symbol;
-  setTimeout(resetAfterQuestion, 2000);
+  symbolDisplay.classList.add("show");
+  if (soundType === "correct") { correctSound.currentTime = 0; correctSound.play().catch(()=>{}); }
+  if (soundType === "wrong") { wrongSound.currentTime = 0; wrongSound.play().catch(()=>{}); }
+  setTimeout(() => {
+    symbolDisplay.classList.remove("show");
+    resetAfterQuestion();
+  }, 2000);
 }
 
 /* === 題目結束重置 === */
