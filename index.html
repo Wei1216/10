@@ -17,20 +17,21 @@ body {
   display: flex;
   height: 100vh;
   background: #f8f8f8;
+  align-items: flex-start; /* ✅ 修正：避免撐滿垂直方向 */
 }
 
 /* === 左側：選號器 === */
 .lottery-container {
-  flex: 0 0 280px; /* ✅ 寬度拉長 */
+  width: 280px; /* ✅ 改成固定寬度 */
   background: rgba(255, 255, 255, 0.85);
   border-right: 3px solid #98d0de;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
   align-items: center;
   box-shadow: 2px 0 8px rgba(0,0,0,0.1);
   text-align: center;
   padding: 20px;
+  height: auto; /* ✅ 修正：只依內容高度 */
 }
 .title { font-size: 20px; font-weight: bold; color: #333; margin-bottom: 10px; }
 .number-display {
@@ -68,8 +69,7 @@ body {
 .choice-buttons {
   display: flex;
   gap: 10px;
-  margin-top: auto; /* ✅ 固定在底部 */
-  margin-bottom: 10px;
+  margin-top: 20px; /* ✅ 固定間距 */
 }
 .choice-btn {
   font-size: 24px;
@@ -103,6 +103,7 @@ body {
   align-items: center;
   flex-direction: column;
   position: relative;
+  height: 100vh;
 }
 #marquee {
   font-size: 2rem;
@@ -266,7 +267,7 @@ startBtn.onclick = startMarquee;
 img.onclick = handleImageClick;
 
 function startMarquee() {
-  if (!canDraw) return; // ✅ 防止圈叉期間抽題
+  if (!canDraw) return;
   if (remaining.length === 0) {
     marquee.textContent = "所有題目都抽完啦！";
     return;
@@ -334,16 +335,18 @@ document.getElementById("crossBtn").onclick = () => showSymbol("❌", wrongSound
 
 function showSymbol(symbol, sound) {
   if (!canDraw) return;
-  canDraw = false; // ✅ 暫時鎖定
+  canDraw = false;
   img.style.display = "none";
   marquee.style.display = "none";
   symbolDisplay.textContent = symbol;
   symbolDisplay.classList.add("show");
   if (sound) { sound.currentTime = 0; sound.play().catch(()=>{}); }
+  
   setTimeout(() => {
     symbolDisplay.classList.remove("show");
     symbolDisplay.textContent = "";
-    canDraw = true; // ✅ 恢復可抽題
+    canDraw = true;
+    startBtn.style.display = "block"; // ✅ 修正：圈叉後重新顯示「開始抽題」
   }, 2000);
 }
 </script>
