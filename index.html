@@ -22,30 +22,65 @@ body {
 
 /* === 左側：選號器 === */
 .lottery-container {
-  width: 280px; /* ✅ 改成固定寬度 */
+  width: 280px;
   background: rgba(255, 255, 255, 0.85);
   border-right: 3px solid #98d0de;
   display: flex;
   flex-direction: column;
-  align-items: center;
   box-shadow: 2px 0 8px rgba(0,0,0,0.1);
   text-align: center;
-  padding: 20px;
-  height: auto; /* ✅ 修正：只依內容高度 */
+  height: 100vh; /* ✅ 高度滿版 */
+  padding: 0;
 }
-.title { font-size: 20px; font-weight: bold; color: #333; margin-bottom: 10px; }
+
+/* 上方內容（選號器區）8成高度 */
+.lottery-top {
+  flex: 8; /* ✅ 佔整體的 8/10 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* 下方圈叉按鈕區 2成高度 */
+.lottery-bottom {
+  flex: 2; /* ✅ 佔整體的 2/10 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f0f8fa;
+  border-top: 2px solid #98d0de;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
 .number-display {
-  width: 90px; height: 60px;
+  width: 90px;
+  height: 60px;
   border: 3px solid #98d0de;
   border-radius: 8px;
-  display: flex; justify-content: center; align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: linear-gradient(45deg, #f8f9ff, #e8ecff);
 }
-.number { font-size: 28px; font-weight: bold; color: #98d0de; }
+.number {
+  font-size: 28px;
+  font-weight: bold;
+  color: #98d0de;
+}
 .progress-bar {
-  width: 150px; height: 6px;
-  background: #eee; border-radius: 3px;
-  margin: 10px auto; overflow: hidden;
+  width: 150px;
+  height: 6px;
+  background: #eee;
+  border-radius: 3px;
+  margin: 10px auto;
+  overflow: hidden;
 }
 .progress-fill {
   height: 100%;
@@ -53,7 +88,11 @@ body {
   width: 0%;
   transition: width 0.1s linear;
 }
-.status-text { font-size: 13px; color: #666; margin-top: 5px; }
+.status-text {
+  font-size: 13px;
+  color: #666;
+  margin-top: 5px;
+}
 .lottery-btn {
   margin-top: 15px;
   padding: 8px 20px;
@@ -69,7 +108,6 @@ body {
 .choice-buttons {
   display: flex;
   gap: 10px;
-  margin-top: 20px; /* ✅ 固定間距 */
 }
 .choice-btn {
   font-size: 24px;
@@ -85,14 +123,11 @@ body {
 .choice-btn:hover {
   transform: scale(1.1);
 }
-.choice-btn.circle { color: #4CAF50; }
-.choice-btn.cross { color: #F44336; }
-
-.spinning { animation: spin 0.1s linear infinite; }
-@keyframes spin {
-  0% { transform: translateY(-20px); opacity: 0.5; }
-  50% { transform: translateY(0); opacity: 1; }
-  100% { transform: translateY(20px); opacity: 0.5; }
+.choice-btn.circle {
+  color: #4CAF50;
+}
+.choice-btn.cross {
+  color: #F44336;
 }
 
 /* === 右側：跑馬燈／圖片顯示區 === */
@@ -162,16 +197,20 @@ body {
 
 <!-- 左側選號器 -->
 <div class="lottery-container">
-  <div class="title">選號器</div>
-  <div class="number-display"><div class="number" id="numberDisplay">?</div></div>
-  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-  <div class="status-text" id="statusText">等待啟動</div>
-  <button class="lottery-btn" id="lotteryBtn">抽號碼</button>
+  <div class="lottery-top">
+    <div class="title">選號器</div>
+    <div class="number-display"><div class="number" id="numberDisplay">?</div></div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="status-text" id="statusText">等待啟動</div>
+    <button class="lottery-btn" id="lotteryBtn">抽號碼</button>
+  </div>
 
-  <!-- 圈叉按鈕 -->
-  <div class="choice-buttons">
-    <button class="choice-btn circle" id="circleBtn">⭕</button>
-    <button class="choice-btn cross" id="crossBtn">❌</button>
+  <!-- 底部圈叉按鈕區 -->
+  <div class="lottery-bottom">
+    <div class="choice-buttons">
+      <button class="choice-btn circle" id="circleBtn">⭕</button>
+      <button class="choice-btn cross" id="crossBtn">❌</button>
+    </div>
   </div>
 </div>
 
