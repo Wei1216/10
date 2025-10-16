@@ -281,15 +281,15 @@ document.getElementById("lotteryBtn").onclick = startLottery;
 
 /* ====== 抽題邏輯 ====== */
 const questionPool = [
-  { type: "A", text: "題目：有平面嗎？", images: ["15.png"] },
-  { type: "A", text: "題目：有平面嗎？", images: ["19.png"] },
-  { type: "A", text: "題目：有平面嗎？", images: ["23.png"] },
-  { type: "B", text: "題目：哪個面比較大？", images: ["16.png"] },
-  { type: "B", text: "題目：哪個面比較大？", images: ["20.png"] },
-  { type: "B", text: "題目：哪個面比較大？", images: ["24.png"] },
-  { type: "C", text: "題目：怎麼比較？", images: ["17.png","18.png"] },
-  { type: "C", text: "題目：怎麼比較？", images: ["21.png","22.png"] },
-  { type: "C", text: "題目：怎麼比較？", images: ["25.png","26.png"] }
+  { id: 1, type: "A", text: "題目：有平面嗎？", images: ["15.png"] },
+  { id: 2, type: "A", text: "題目：有平面嗎？", images: ["19.png"] },
+  { id: 3, type: "A", text: "題目：有平面嗎？", images: ["23.png"] },
+  { id: 4, type: "B", text: "題目：哪個面比較大？", images: ["16.png"] },
+  { id: 5, type: "B", text: "題目：哪個面比較大？", images: ["20.png"] },
+  { id: 6, type: "B", text: "題目：哪個面比較大？", images: ["24.png"] },
+  { id: 7, type: "C", text: "題目：怎麼比較？", images: ["17.png","18.png"] },
+  { id: 8, type: "C", text: "題目：怎麼比較？", images: ["21.png","22.png"] },
+  { id: 9, type: "C", text: "題目：怎麼比較？", images: ["25.png","26.png"] }
 ];
 
 let remaining = [...questionPool];
@@ -339,7 +339,10 @@ function getNextQuestion() {
   else if (drawCount === 2) filtered = remaining.filter(q => q.type === "B");
   else if (drawCount === 3) filtered = remaining.filter(q => q.type === "C");
   else filtered = remaining;
-  return filtered[Math.floor(Math.random() * filtered.length)];
+
+  // 從篩選結果中隨機挑一題
+  const chosen = filtered[Math.floor(Math.random() * filtered.length)];
+  return chosen;
 }
 
 function showImage(q) {
@@ -360,7 +363,9 @@ function handleImageClick() {
 }
 
 function resetAfterQuestion() {
-  remaining = remaining.filter(q => q !== currentQ);
+  if (!currentQ) return;
+  // ✅ 改成用 id 移除，不會重複抽出
+  remaining = remaining.filter(q => q.id !== currentQ.id);
   currentQ = null;
   img.style.display = "none";
   marquee.textContent = "按「開始抽題」";
