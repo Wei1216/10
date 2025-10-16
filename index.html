@@ -6,9 +6,9 @@
 <title>單元十-面的大小比較</title>
 <style>
 
+/* 如果 BpmfGenSenRounded-B.ttf 檔案缺失，請將此段註解或刪除 */
 @font-face {
-  font-family: 'BpmfGenSenRounded-B'; /* 給字體一個自訂名稱 */
-  /* 請確認這個路徑是正確的 */
+  font-family: 'BpmfGenSenRounded-B';
   src: url('BpmfGenSenRounded-B.ttf') format('truetype'); 
   font-weight: normal;
   font-style: normal;
@@ -21,11 +21,17 @@
     display: flex;
     height: 100vh;
     background: #f8f8f8;
+    
+    /* *** 修正：明確設定 Flexbox 方向 *** */
+    flex-direction: row; 
   }
 
   /* === 左側：選號器容器 === */
   .lottery-container {
+    /* *** 修正：增加 min-width 確保寬度不被內容擠壓 *** */
     flex: 0 0 200px;
+    min-width: 200px;
+    
     background: rgba(255, 255, 255, 0.85);
     border-right: 3px solid #98d0de;
     display: flex;
@@ -66,7 +72,7 @@
     border: none;
     border-radius: 6px;
     cursor: pointer;
-    font-family: "BpmfGenSenRounded-B", "Microsoft JhengHei", sans-serif;
+    /* 移除個別字體設定，繼承 body 上的 */
   }
 
   .spinning { animation: spin 0.1s linear infinite; }
@@ -97,7 +103,7 @@
     border-radius: 8px;
     cursor: pointer;
     transition: opacity 0.1s;
-    font-family: "BpmfGenSenRounded-B", "Microsoft JhengHei", sans-serif;
+    /* 移除個別字體設定，繼承 body 上的 */
   }
   #oxBtnO { background-color: #4CAF50; }
   #oxBtnX { background-color: #F44336; }
@@ -142,7 +148,7 @@
     border: none;
     border-radius: 6px;
     cursor: pointer;
-    font-family: "BpmfGenSenRounded-B", "Microsoft JhengHei", sans-serif;
+    /* 移除個別字體設定，繼承 body 上的 */
   }
   
   /* === 新增：O/X 圖片覆蓋層 (跑馬燈最上層) === */
@@ -207,7 +213,7 @@
 
 <div id="main-area">
     <div id="ox-overlay">
-      </div>
+          </div>
   <div id="marquee">按「開始抽題」</div>
   <img id="main-image" src="">
   <button id="start-btn">開始抽題</button>
