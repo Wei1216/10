@@ -235,9 +235,19 @@ function startMarquee() {
     const chosen = getNextQuestion(); // 改：控制前三題的抽出順序
     currentQ = chosen;
     // 在這裡呼叫 showImage，並傳入 chosen
-    showImage(chosen); 
-  }, 3000);
+// 將跑馬燈內容固定為最終題目文字 (確保在停留期間顯示正確題目)
+    marquee.textContent = chosen.text;
+
+    // 第二層 setTimeout: 再等 1 秒後才顯示圖片
+    setTimeout(() => {
+      // 1秒停留結束，顯示圖片並隱藏文字
+      showImage(chosen); 
+    }, 1000); // 這裡設定稍停的 1000 毫秒 (1秒)
+
+  }, 3000);
 }
+
+// ... 後續程式碼不變 ...
 
 // === 控制前三題必出特定類型 ===
 function getNextQuestion() {
