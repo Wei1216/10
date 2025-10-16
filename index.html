@@ -6,7 +6,7 @@
 <title>單元十-面的大小比較</title>
 <style>
 
-/* 如果 BpmfGenSenRounded-B.ttf 檔案缺失，請將此段註解或刪除 */
+/* 確保字體文件 (BpmfGenSenRounded-B.ttf) 存在於同目錄 */
 @font-face {
   font-family: 'BpmfGenSenRounded-B';
   src: url('BpmfGenSenRounded-B.ttf') format('truetype'); 
@@ -18,12 +18,15 @@
     margin: 0;
     /* 確保第一個字體名稱與 @font-face 中的 family 名稱一致 */
     font-family: "BpmfGenSenRounded-B", "Microsoft JhengHei", sans-serif; 
-    display: flex;
-    height: 100vh;
-    background: #f8f8f8;
     
-    /* *** 修正：明確設定 Flexbox 方向 *** */
-    flex-direction: row; 
+    /* *** 修正：確保 body 佔滿整個視窗並啟用 Flex *** */
+    display: flex;
+    width: 100vw; /* 確保 body 佔據整個視窗寬度 */
+    height: 100vh;
+    flex-direction: row; /* 明確指定從左到右排列 */
+    /* =================================================== */
+    
+    background: #f8f8f8;
   }
 
   /* === 左側：選號器容器 === */
@@ -213,7 +216,7 @@
 
 <div id="main-area">
     <div id="ox-overlay">
-          </div>
+      </div>
   <div id="marquee">按「開始抽題」</div>
   <img id="main-image" src="">
   <button id="start-btn">開始抽題</button>
@@ -227,8 +230,8 @@ let animationInterval, progressInterval;
 // 取得音效元素
 const rollingSound = document.getElementById('rollingSound');
 const chimeSound = document.getElementById('chimeSound');
-const correctSound = document.getElementById('correctSound'); // 新增
-const wrongSound = document.getElementById('wrongSound');  // 新增
+const correctSound = document.getElementById('correctSound');
+const wrongSound = document.getElementById('wrongSound');
 
 
 function getRandomNumber() {
